@@ -1,0 +1,37 @@
+<html>
+<head>
+	<h1>what the fuck, forget everything already</h1>
+</head>
+
+<body>
+	<script>
+	   sports = ["football","baseball","hockey"];
+	   sports.reverse();
+	   document.write(sports + "</br>");
+	   sports.push("hockey");
+	   document.write("After push: " + sports + "</br>");
+	   removed=sports.pop();
+	   document.write("After pop: " + sports + "</br>");
+	   document.write("removed:" + removed + "</br></br>");
+	   document.write("After join with ':' " + sports.join(' : ') + "</br>");
+
+
+	   function User(forename, username, password)
+	   {
+	   	   this.forename = forename;
+	   	   this.username = username;
+	   	   this.password = password;
+
+	   	   this.showUser = function()
+	   	   {
+	   	   	   document.write("forename: " + this.forename + "</br>");
+	   	   	   document.write("username: " + this.forename + "</br>");
+	   	   	   document.write("password: " + this.password + "</br>");
+	   	   }
+	   }
+
+	   details = new User("Zhang","Lover","JC");
+	   details.showUser();
+	</script>
+</body>
+</html>

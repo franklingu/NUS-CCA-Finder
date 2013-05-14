@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<script language="JavaScript" type="text/javascript">
+<!--
+pict = new Array ("Penguins.jpg","Koala.jpg","Desert.jpg","Jellyfish.jpg");
+imgCount = 0;
+totalLength = pict.length;
+var obj;
+
+function rotateImg(){
+    if (document.images){
+		    imgCount++;
+				
+				if (imgCount==totalLength){
+				    imgCount = 0;
+				}
+				document.IMG.src = pict[imgCount];
+				obj = setTimeout("rotateImg()",1000);
+		}	
+}
+
+function stopRotate(){
+    clearTimeout(obj);
+}
+//-->
+</script>
+
+<title>slideshow function</title>
+</head>
+<body onload="rotateImg()">
+<center><img name="IMG" src="Koala.jpg" border="2" height="500" width="400" style="border-color:#00ff00"><br />
+<button value="stopRotate" onclick="stopRotate()">Stop Rotate</ button> </center>
+</body>
+</html>

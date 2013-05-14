@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>tryCatch</title>
+</head>
+<body>
+<script language="JavaScript" type="text/javascript">
+<!--
+   function butCalculate_onclick()
+	 {
+	     try
+			 {
+			     if (window.top.calcFactorial == null)
+					     throw "This page is not loaded within the correct frameset";
+					 if (document.form1.txtNum1.value == "")
+					     throw "Please enter a value";
+					 if (isNaN(document.form1.txtNum1.value))
+					     throw "Please enter a valid value";
+					 if (document.form1.txtNum1.value < 0)
+					     throw "Please enter a positive number";
+							 
+					 document.form1.txtResult.value =
+					 window.parent.calcFactorial(document.form1.txtNum1.value);
+			 }
+			 catch(exception)
+			 {
+			     if (typeof(exception) == "string")
+					 {
+					    if (exception.charAt(0) == "P")
+							{
+							    alert(exception.substr(0));
+									document.form1.txtNum1.focus();
+									document.form1.txtNum1.select();
+							}
+							else
+							{
+							    alert(exception);
+							}
+					 }
+					 else
+					 {
+					     alert("The following error occured " + exception.message);
+					 }
+			 }
+	 }
+//-->
+</script>
+
+<form action="" name="form1">
+   <input type="text" name="txtNum1" size="3" />factorial is
+	 <input type="text" name="txtResult" size="25" /><br />
+	 <input type="button" value="Calculate Factorial"
+	   name="butCalculate" onclick="butCalculate_onclick()" />
+</form>
+</body>
+</html>

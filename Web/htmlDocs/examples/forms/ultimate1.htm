@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Ultimate form</title>
+
+ <script language="javascript">
+<!--
+swapping = "no";
+// -->
+</script>
+<script language="javascript">
+<!--
+swapping = "yes";
+// -->
+</script>
+<script language="javascript">
+<!-- This script was written by Craig Corvin for Cut-N-Paste javascript (7/97). 
+
+if (swapping == "yes") {
+
+pict1 = new Image();
+pict1.src = "Desert.jpg";
+
+pict2 = new Image();
+pict2.src = "Koala.jpg"; 
+
+pict3 = new Image();
+pict3.src = "Tulips.jpg";
+
+pict4 = new Image();
+pict4.src = "Lighthouse.jpg";
+
+pict5= new Image();
+pict5.src = "smile1.gif";
+
+}
+
+
+slides = 5;
+rotations = 100;
+speed = 1000;
+
+function runit() 
+{
+
+    if (swapping == "yes") {
+		
+        for (x=1, y=0 ; x < (slides*rotations); x=x+slides, y=0) 
+				{
+             setTimeout("document.slideshow.src = pict2.src",((x + y) * speed));
+             y++; 
+             setTimeout("document.slideshow.src = pict3.src",((x + y) * speed));
+             y++; 
+             setTimeout("document.slideshow.src = pict4.src",((x + y) * speed));
+             y++; 
+             setTimeout("document.slideshow.src = pict1.src",((x + y) * speed));
+						 y++;
+						 setTimeout("document.slideshow.src = pict5.src",((x + y) * speed));
+        }
+    }
+
+}
+
+</script>
+</head>
+
+
+<body>
+   <div>
+   <form action="www.googledocs.com/gujunchao" method="post" name="frmComp">
+	  <fieldset>
+		   <legend><em>Contact information</em></legend>
+			    <label>First name: <input type="text" name="txtFName" size="20" /></label><br />
+			    <label>Last name: <input type="text" name="txtLName" size="20" /></label><br />
+			    <label>E-mail: <input type="text" name="txtEmail" size="20" /></label><br />
+		</fieldset>
+		<fieldset>
+		   <legend><em>Competition Questions</em></legend>
+			    How tall is the Eiffel Tower in Paris?<br />
+					<label><input type="radio" name="radAnswer" size="20" />584ft</label><br />
+					<label><input type="radio" name="radAnswer" size="20" />784ft</label><br />
+					<label><input type="radio" name="radAnswer" size="20" />984ft</label><br />
+					<label><input type="radio" name="radAnswer" size="20" />1184ft</label><br />
+		</fieldset>
+		<fieldset>
+		   <legend><em>Tiebreaker Question</em></legend>
+			    <label>In 25 words,tell us why you would like to win $10,000:</ br>
+					   <textarea name="txtTiebreaker" rows="10" cols="120"></textarea>
+					</label>
+		</fieldset>
+		<fieldset>
+		   <legend><em>Submit your answers</em></legend>
+			    <input type="submit" value="SUBMIT" />
+		</fieldset>
+	</form>
+ </div>
+ 
+ <div>
+    <body onload="runit()">
+    <p align="center"><a href="http://www.nus.edu.sg";><img name="slideshow"
+       src="banner1.gif" border="2" width="400" height="400" title="self-javascript"></a> </p>
+ </div>
+
+</body>
+</html>
+<!---in the textarea part,there is some problem with the position/composition of the webpage--->
