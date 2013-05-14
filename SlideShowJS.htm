@@ -1,0 +1,60 @@
+<html>
+<head>
+	<title>The JS slideshow effect</title>
+	<h1>complete version</h1>
+
+	<style type="text/css">#menuConstraint{height:800;}</style>
+
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+	var dWidLyr = 450;
+	var dHgtLyr = 450;
+	var curSlide = 0;
+	var zIdx = -1;
+	var isVis = false;
+
+	var NN = (document.layers ? true:false);
+	var sWidPos = ((NN ? innerWidth:screen.availWidth)/2 - (dWidLyr/2));
+	var sHgtPos = ((NN ? innerHeight:screen.availHeight)/2 - (dHgtLyr/2));
+    var hideName = (NN ? 'hide':'hidden');
+    var showName = (NN ? 'show':'visible');
+
+    var img = new Array();
+    var imgOut = new Array();
+    var imgOver = new Array();
+    var showSpeed = 450;
+    var turnOn = false;
+
+    function genLayer(sName, sLeft, sTop, sWdh, sHgt, sVis, copy){
+        if (NN){
+        	document.writeln('<LAYER NAME="'+sName+'" LEFT='+sLeft+' TOP='+sTop+' WIDTH='+sWdh+' HEIGHT='+sHgt+' VISIBILITY="'+sVis+'"'+'Z-INDEX='+(++zIdx)+'>'+copy+'</LAYER>');
+        }
+        else{
+        	document.writeln('div id="'+sName+'" STYLE=" position:absolute; overflow:none;left:'+sLeft+'px; top:'+sTop+'px; width:'+sWdh+'px; height:'+sHgt+'px;'+'visibility:'+sVis+'z-Index='+(++zIdx)+'>'+copy+'</div>');
+        }
+    }
+
+    function slide(imgStr, scientific, copy){
+    	this.name = imgStr+'.jpg';
+    	imgPreLoad(imgStr);
+    	this.copy = copy;
+    	this.structrue = '<table width=500 cellpadding=10><tr><td width=60% valign=top>'+'<img src='imgStr'>'+'</td>
+    	                 <td width=40% valign=top><h2>common name:</h2><h2><i>'+camelCap(imgStr)+'</i></h2><h3>Scientific name:</h3><h3><i>'+scientific+'</i></h3>'+'<b>abstract</b><br />'+copy+'</tr></table>';
+
+    	return this;
+    }
+
+    function imgPreLoad(imgStr){
+    	img[img.length] = new Image();
+    	img[img.length-1].src = imgStr+'.jpg';
+        
+        imgOut[imgOut.length] = new Image();
+        imgOut[imgOut.length-1].src = imgStr+'.jpg';
+
+        img
+    }
+	//-->
+</head>
+<body>
+</body>
+</html>
