@@ -1,0 +1,102 @@
+<!---edit profile page-->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>NUS CCA Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery-2.0.0.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">  <!--define css class for the whole body-->
+
+      <!-- Top bar --> 
+      <div class="row-fluid top-container">  
+	<div class="span5">
+	  <img class="logo" src="../images/nuslogo.jpg">
+	</div>
+	<div class="span4 offset8 signin-align">
+	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
+	</div>
+      </div>
+      <!-- End of top bar -->
+
+      <!-- Main navigation -->
+      <div class = "navbar">
+	<div class = "navbar-inner">
+	  <ul class = "nav">
+	    <li> <a href="/index">Home</a> </li>
+	    <li> <a href="/profile">Profile</a> </li>
+	    <li> <a href="/search">Search</a> </li>
+	    <li> <a href="/view">View</a> </li>
+	  </ul>
+	</div> 
+      </div>
+      
+      <!--the following form is not properly defined-->
+      <form action='/editprofile' enctype="multipart/form-data" method='post'>
+	<fieldset>
+	  <div class = "row-fluid">
+	    <p>Your personal profile: </p>
+	    <div class="span6">
+	      <input type="file" name="face_img">
+	    </div>
+	    <div class="span6"> 
+	      Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	      <input type="text" value={{ name }} name="person_name">
+	    </div>
+	    <div class="span6"> 
+	      Gender:&nbsp;&nbsp; 
+	      <input type="radio" name="person_gender" value="Male" checked>Male &nbsp;&nbsp;&nbsp;
+	      <input type="radio" name="person_gender" value="Female" >Female
+	    </div>
+	    <div class="span6">
+	      Year: &nbsp;&nbsp;&nbsp;
+	      <select name="person_year">
+	      	<option value='1'>Year 1</option>
+	      	<option value='2'>Year 2</option>
+	      	<option value='3'>Year 3</option>
+	      	<option value='4'>Year 4</option>
+	      	<option value='5'>Year 5</option>
+	      </select>
+	    </div>
+	    <div class="span6">
+	      Faculty: &nbsp;&nbsp;&nbsp;&nbsp;
+	      <input type="text" value={{ faculty }} name="person_faculty">
+	    </div>
+	    <div class="span6">
+          Residence:
+          <select name="person_residence">
+          	<option value="Eusoff">Eusoff</option>
+          	<option value="King Edward">King Edward</option>
+          	<option value="Kent Ridge">Kent Ridge</option>
+          	<option value="Raffles">Raffles</option>
+          	<option value="Sheares">Sheares</option>
+          	<option value="Temasek">Temasek</option>
+          	<option value="PGP">PGP</option>
+          	<option value="RVR">RVR</option>
+          	<option value="KFH">KFH</option>
+          	<option value="UTown">UTown</option>
+          </select>
+	    </div>
+	    <div class="span6">
+	      Interest:<br />
+	      <textarea name="person_interest"></textarea>
+	    </div>
+	    <div class="span6">
+	    	<input type="submit">
+	    </div>
+	    <div class="span6">
+          <br /> <br /> <br />
+	    </div>
+	  </div>
+	</fieldset>	
+      </form>
+      
+    </div>
+  </body>
+</html>
+

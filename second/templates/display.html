@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title> Giftbook</title>
+    <title>NUS CCA Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -26,28 +26,61 @@
       <div class = "navbar">
 	<div class = "navbar-inner">
 	  <ul class = "nav">
-	    <li> <a href="/giftbook">Home</a> </li>
-	    <li> <a href="/wishlist">Wish List</a> </li>
+	    <li> <a href="/index">Home</a> </li>
+	    <li> <a href="/profile">Profile</a> </li>
 	    <li> <a href="/search">Search</a> </li>
+	    <li> <a href="/view">View</a> </li>
 	  </ul>
 	</div> 
       </div>
 
       <h4> Searching Results </h4>
-      <p>for the user with email: </p><p><span>{{target_mail}}</span></p>
+      <p>for the user with email: </p><p><span>{{ target_mail }}</span></p><br />
+      <p>CCAs s/he is currently in:</p>
       <table class="table table-bordered table-striped" >
 	<thead>
-	  <tr><th width="70%">Item</th><th>Link</th><th>Date</th></tr>
+	  <tr><th width="70%">Name</th><th>Location</th><th>Description</th><th>Date</th></tr>
 	</thead>
 	<tbody>
-	  {% for item in items %}
-	  <tr><td>{{ item.description }} </td>
+	  {% for CCA in CCAs1 %}
+	  <tr>
+	  	<td>
+          {{ CCA.CCA_name }}
+	  	</td>
+	  	<td>
+          {{ CCA.CCA_location }}
+	  	</td>
+	  	<td>
+	  	  {{ CCA.CCA_description }} 
+	  	</td>
 	    <td>
-	      {% if item.image_link != "" %}
-	      <a href="{{ item.item_link }}" target="_blank"><img class = "itemimage" src="{{ item.image_link }}"></a>
-	      {% endif %}
+	      {{ CCA.date }}
 	    </td>
-	    <td>{{ item.date.strftime('%Y-%m-%d')  }} </td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+
+      <p>CCAs s/he is interested</p>
+      <table class="table table-bordered table-striped" >
+	<thead>
+	  <tr><th width="70%">Name</th><th>Location</th><th>Description</th><th>Date</th></tr>
+	</thead>
+	<tbody>
+	  {% for CCA in CCAs2 %}
+	  <tr>
+	  	<td>
+          {{ CCA.CCA_name }}
+	  	</td>
+	  	<td>
+          {{ CCA.CCA_location }}
+	  	</td>
+	  	<td>
+	  	  {{ CCA.CCA_description }} 
+	  	</td>
+	    <td>
+	      {{ CCA.date }}
+	    </td>
 	  </tr>
 	  {% endfor %}
 	</tbody>

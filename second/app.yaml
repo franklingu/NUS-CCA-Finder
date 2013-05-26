@@ -1,10 +1,14 @@
 application: nusccagu
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
 
 - url: /stylesheets
   static_dir: stylesheets
@@ -29,7 +33,7 @@ handlers:
 
 # All other pages require login
 - url: /.*
-  script: giftbook.app
+  script: cca.app
   login: required
 
 libraries:

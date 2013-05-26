@@ -29,5 +29,14 @@
 
 /* For image of item */
 .itemimage {
-    height: 100px
+    height: 200px;
+}
+
+.itemimage:hover {
+    cursor: pointer;
+}
+
+#user-pic-div {
+    height: 200px;
+    width: 200px;
 }

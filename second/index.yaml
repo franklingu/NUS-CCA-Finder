@@ -10,6 +10,13 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: CCA_item
+  ancestor: yes
+  properties:
+  - name: CCA_join
+  - name: date
+    direction: desc
+
 - kind: Items
   properties:
   - name: email

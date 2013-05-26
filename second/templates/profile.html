@@ -1,0 +1,133 @@
+<!-- Wish list -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>NUS CCA Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery-2.0.0.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">  <!--define css class for the whole body-->
+
+      <!-- Top bar --> 
+      <div class="row-fluid top-container">  
+	<div class="span5">
+	  <img class="logo" src="../images/nuslogo.jpg">
+	</div>
+	<div class="span4 offset8 signin-align">
+	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
+	</div>
+      </div>
+      <!-- End of top bar -->
+
+      <!-- Main navigation -->
+      <div class = "navbar">    
+	<div class = "navbar-inner">
+	  <ul class = "nav">
+	    <li> <a href="/index">Home</a> </li>
+	    <li> <a href="/profile">Profile</a> </li>
+	    <li> <a href="/search">Search</a> </li>
+	    <li> <a href="/view"> View </a> </li>
+	  </ul>
+	</div>
+      </div>
+ 
+	<fieldset>
+	  <div class="row-fluid">
+	  	<blockquote>
+	    <p class="text-info">Your personal profile: </p>
+	    </blockquote>
+	  </div>
+	  <div class="row">
+	  	<div class="span6 offset1">
+	  	  <p class="text-info">Your picture:</p>
+	  	</div>
+	  	<div class="span5">
+	  	  <p class="text-info">Basic info:</p>
+	  	</div>
+	  </div>
+	  <div class="row">
+	  	<div class="span6 offset1">
+	      <attr title="only jpg/png/gif/ are supported">
+	      <img src="/img" class="img-circle"></img>
+	      </attr>
+	    </div>
+
+	      <div class="span5">
+	  <div class="span4">
+	  	<br />
+	  </div>
+	  <div class="span4">
+	    <div class="span2"> 
+	      Name: {{ name }}
+	    </div>
+	  </div>
+	  <div class="span4">
+	    <div class="span2"> 
+	      Gender: {% if gender == True %} Male {% endif %}
+	              {% if gender == False %} Female {% endif %}
+	              {% if gender == "default" %} default {% endif %}
+	    </div>
+	  </div>
+      <div class="span4">
+	    <div class="span2">
+	      Year: {{ year }}
+	    </div>
+	  </div>
+	  <div class="span4">
+	    <div class="span2">
+	      Faculty: {{ faculty }}
+	    </div>
+	  </div>
+	  <div class="span4">    
+	    <div class="span2">
+          Residence: {{ residence }}
+	    </div>
+	  </div>
+	      </div>
+	  </div>
+      <div class="row-fluid">
+      	  <div class="row">
+      	<div class="span12">
+      		<br />
+      	</div>
+      	<div class="span12">
+      		<p class="text-info">Interests and CCAs: </p>
+      	</div>
+      	  </div>
+	    <div class="span12">
+	      Interest:<br /> 
+	      {% for interest in interests %}
+	         {{ interest }}
+	      {% endfor %}
+	      <br />
+	    </div>
+	    <div class="span12">
+           CCAs you are currently in:<br />
+           {% for CCA in CCAs1 %}
+               {{ CCA }}
+           {% endfor %}
+           <br />
+	    </div>
+	    <div class="span12">
+	      CCAs you are interested:<br />
+	      {% for CCA in CCAs2 %}
+              {{ CCA }}
+          {% endfor %}
+           <br />
+	    </div>
+
+	    <div class="span12">
+	     	<br /><br /><br /><br />
+	        {% if complete == False %} <p class="text-success">Your profile is highly incomplete. Why do not you <strong><a href='/editprofile'>edit it</a></strong> now ?</p> {% endif %}
+	        {% if complete == True %} <p class="text-success">You want to update your profile? Update it <strong><a href='/editprofile'>here</a></strong> !</p>{% endif %} 
+        </div>
+	  </div>
+	</fieldset>	     
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+cron:
+#this file now is trying to keep everything running
+#will change the schedule to necessary when know it better
+- description: keep main running
+  url: /
+  schedule: every 30 minutes from 00:00 to 23:59

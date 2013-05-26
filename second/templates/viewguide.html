@@ -1,0 +1,114 @@
+<!-- view page -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>NUS CCA Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery-2.0.0.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid"> 
+
+      <!-- Top bar --> 
+      <div class="row-fluid top-container">  
+	<div class="span5">
+	  <img class="logo" src="../images/nuslogo.jpg">
+	</div>
+	<div class="span4 offset8 signin-align">
+	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
+	</div>
+      </div>
+      <!-- End of top bar -->
+
+      <!-- Main navigation -->
+      <div class = "navbar">
+	<div class = "navbar-inner">
+	  <ul class = "nav">
+	    <li> <a href="/index">Home</a> </li>
+	    <li> <a href="/profile">Profile</a> </li>
+	    <li> <a href="/search">Search</a> </li>
+	    <li> <a href="/view">View</a> </li>
+	  </ul>
+	</div> 
+      </div>
+
+
+    </div>
+
+
+
+      <!--css is not working for it at all-->
+      <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#lA" data-toggle="tab">View CCAs by category</a></li>
+            <li><a href="#lB" data-toggle="tab">View CCAs by location</a></li>
+            <li><a href="#lC" data-toggle="tab">View CCAs by searching</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="lA">
+          <ul>
+            <li>Sports</li>
+            <li>Dance and Sing</li>
+            <li>Tech</li>
+            <li>Arts</li>
+            <li>Others</li>
+            <br /><br /><br />
+            <p>You can view the whole page here</p>
+          </ul>
+            </div>
+            <div class="tab-pane" id="lA">
+          <ul>
+            <li>Eusoff</li>
+            <li>King Edward</li>
+            <li>Kent Ridge</li>
+            <li>Raffles</li>
+            <li>Sheares</li>
+            <li>Temasek</li>
+            <li>PGP</li>
+            <li>RVR</li>
+            <li>KFH</li>
+            <li>UTown</li>
+            <br /><br /><br />
+            <p>You can view the whole page here</p>
+          </ul>
+            </div>
+            <div class="tab-pane" id="lA">
+            Search: &nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="search_query" value="input words">
+            <br /><br /><br />
+            <p>You can view the whole page here</p>
+             </div>
+        </div>
+<!--this is for test
+        <div class="tabbable tabs-left">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#lA" data-toggle="tab">Section 1</a></li>
+                <li><a href="#lB" data-toggle="tab">Section 2</a></li>
+                <li><a href="#lC" data-toggle="tab">Section 3</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="lA">
+                  <p>I'm in Section A.</p>
+                </div>
+                <div class="tab-pane" id="lB">
+                  <p>Howdy, I'm in Section B.</p>
+                </div>
+                <div class="tab-pane" id="lC">
+                  <p>What up girl, this is Section C.</p>
+                </div>
+              </div>
+            </div> 
+          -->
+        
+
+
+
+
+
+
+  </body>
+</html>
