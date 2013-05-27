@@ -264,7 +264,7 @@ class ViewByHall(webapp2.RequestHandler):
         'user_mail': users.get_current_user().email(),
         'logout': users.create_logout_url(self.request.host_url),
         }
-      template = jinja_environment.get_template('viewbyhall.html')
+      template = jinja_environment.get_template('viewbyhalls.html')
       self.response.out.write(template.render(template_values))
     else:
       self.redirect(self.request.host_url)
@@ -332,6 +332,9 @@ app = webapp2.WSGIApplication([('/index', MainPage),
                                ('/search', Search),
                                ('/display', Display),
                                ('/view', View),
+                               ('/viewbyhall',ViewByHall),
+                               ('viewbycategory',ViewByCategory),
+                               ('viewbysearch',ViewBySearch),
                                ('/img', Image),
                                ('/errormsg',ErrorDealing)],
                               debug=True)
