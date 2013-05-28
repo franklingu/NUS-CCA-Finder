@@ -39,18 +39,20 @@ class Persons(db.Model):
   year = db.IntegerProperty()
   faculty = db.StringProperty()
   residence = db.StringProperty()
-  interest = db.ListProperty(str)
+  interest = db.StringListProperty()
   
-class CCA_item(db.Model):
+class CCA(db.Model):
   """Models a CCA by name location and description"""
-  CCA_name = db.StringProperty()
-  CCA_location = db.StringProperty()
-  CCA_join = db.BooleanProperty()
-  CCA_description = db.StringProperty(multiline=True)
+  name = db.StringProperty()
+  venue = db.StringProperty()
+  category = db.StringProperty()
+  description = db.StringProperty(multiline=True)
+  videolink = db.LinkProperty()
+  joined = db.StringProperty()
   date = db.DateTimeProperty(auto_now_add=True)
 
 #need to be more sure about this one
-class Image(webapp2.RequestHandler):
+class ImageDisplay(webapp2.RequestHandler):
   def get(self):
     parent_key = db.Key.from_path('Persons', users.get_current_user().email())
     person = db.get(parent_key)
@@ -91,11 +93,11 @@ class Profile(webapp2.RequestHandler):
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
           'complete': False,
-          'name': "default",
-          'gender': "default",
-          'year': "default",
-          'faculty': "default",
-          'residence': "default",
+          'name': "",
+          'gender': "",
+          'year': "",
+          'faculty': "",
+          'residence': "",
           'interests': "None",
           'CCAs1': "",
           'CCAs2': "",
@@ -104,8 +106,8 @@ class Profile(webapp2.RequestHandler):
         self.response.out.write(template.render(template_values))
       else:
         #if the user have completed the profile
-        query1 = db.GqlQuery("SELECT * FROM CCA_item WHERE ANCESTOR IS :1 AND CCA_join=True ORDER BY date DESC", parent_key)
-        query2 = db.GqlQuery("SELECT * FROM CCA_item WHERE ANCESTOR IS :1 AND CCA_join=False ORDER BY date DESC", parent_key)
+        query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join=True ORDER BY date DESC", parent_key)
+        query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join=False ORDER BY date DESC", parent_key)
         template_values = {
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
@@ -139,11 +141,11 @@ class EditProfile(webapp2.RequestHandler):
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
           'complete': False,
-          'name': "default",
-          'gender': "default",
-          'year': "default",
-          'faculty': "default",
-          'residence': "default",
+          'name': "",
+          'gender': "",
+          'year': "",
+          'faculty': "",
+          'residence': "",
           'interest': "None",
         }
         template = jinja_environment.get_template('editprofile.html')
@@ -194,9 +196,14 @@ class EditProfile(webapp2.RequestHandler):
     newProfile.residence = self.request.get('person_residence')
     newProfile.interest = self.request.get('interest').split()
     if len(newProfile.interest) > 6:
-      self.redirect('/errormsg' + "?error=TooManyInterests&continue_url=profile")
+      err_exist = True
+      msg = "?error=TooManyInterests&continue_url=profile"
     if newProfile.name == "None" or newProfile.name == "default" or newProfile.name == "":
-      self.redirect('/errormsg' + "?error=NameIsIllegal&continue_url=profile")
+      err_exist = True
+      msg = "?error=NameIsIllegal&continue_url=profile"
+
+    if err_exist:
+      self.redirect('/errormsg'+msg)
     else:
       newProfile.put()
       self.redirect('/profile')
@@ -225,8 +232,8 @@ class Display(webapp2.RequestHandler):
     # Retrieve person
     parent_key = db.Key.from_path('Persons', target)
 
-    query1 = db.GqlQuery("SELECT * FROM CCA_item WHERE ANCESTOR IS :1 AND CCA_join = True ORDER BY date DESC", parent_key)
-    query2 = db.GqlQuery("SELECT * FROM CCA_item WHERE ANCESTOR IS :1 AND CCA_join = False ORDER BY date DESC", parent_key)
+    query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join = True ORDER BY date DESC", parent_key)
+    query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join = False ORDER BY date DESC", parent_key)
 
     template_values = {
       'user_mail': users.get_current_user().email(),
@@ -333,8 +340,8 @@ app = webapp2.WSGIApplication([('/index', MainPage),
                                ('/display', Display),
                                ('/view', View),
                                ('/viewbyhall',ViewByHall),
-                               ('viewbycategory',ViewByCategory),
-                               ('viewbysearch',ViewBySearch),
-                               ('/img', Image),
+                               ('/viewbycategory',ViewByCategory),
+                               ('/viewbysearch',ViewBySearch),
+                               ('/img', ImageDisplay),
                                ('/errormsg',ErrorDealing)],
                               debug=True)

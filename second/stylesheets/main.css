@@ -18,7 +18,7 @@
 }
 
 /* For the picture of the gift */
-.giftpic {
+.main-pic {
     height: 350px;
 }
 
@@ -39,4 +39,9 @@
 #user-pic-div {
     height: 200px;
     width: 200px;
+}
+
+/*text center for table headers*/
+.table-header {
+    text-align: center;
 }

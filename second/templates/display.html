@@ -1,100 +1,63 @@
-<!-- Wish list -->
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>NUS CCA Finder</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
-  </head>
-  <body>
-    <div class="container-fluid"> 
+<!-- display searching result for a person's cca, extends from base1 -->
+{% extends 'base1.html' %}
 
-      <!-- Top bar --> 
-      <div class="row-fluid top-container">  
-	<div class="span5">
-	  <img class="logo" src="../images/nuslogo.jpg">
-	</div>
-	<div class="span4 offset8 signin-align">
-	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
-	</div>
-      </div>
-      <!-- End of top bar -->
+{% block content %}
+  <h4> Searching Results </h4>
+  <p>for the user with email: </p><p><span>{{ target_mail }}</span></p><br />
+  <p>CCAs s/he is currently in:</p>
 
-    <!-- Main navigation -->
-    <div class = "navbar">
-      <div class = "navbar-inner">
-        <ul class = "nav">
-          <li> <a href="/index">Home</a> </li>
-          <li> <a href="/profile">Profile</a> </li>
-          <li> <a href="/search">Search</a> </li>
-          <li class="dropdown"> 
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" >View<b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="/view">Overview</a></li>
-              <li><a href="/viewbyhall">View by halls</a></li>
-              <li><a href="/viewbycategory">View by category</a></li>
-              <li><a href="/viewbysearch">Search</a></li>
-            </ul>  
-          </li>
-        </div> 
-    </div>
-
-      <h4> Searching Results </h4>
-      <p>for the user with email: </p><p><span>{{ target_mail }}</span></p><br />
-      <p>CCAs s/he is currently in:</p>
-      <table class="table table-bordered table-striped" >
-	<thead>
-	  <tr><th width="70%">Name</th><th>Location</th><th>Description</th><th>Date</th></tr>
-	</thead>
-	<tbody>
-	  {% for CCA in CCAs1 %}
-	  <tr>
-	  	<td>
-          {{ CCA.CCA_name }}
-	  	</td>
-	  	<td>
-          {{ CCA.CCA_location }}
-	  	</td>
-	  	<td>
-	  	  {{ CCA.CCA_description }} 
-	  	</td>
-	    <td>
+  <table class="table table-bordered table-striped">
+	  <thead>
+	    <tr><th class="table-header">Name</th><th class="table-header">Venue</th><th class="table-header">Category</th><th width="50%"  class="table-header">Description</th><th  class="table-header">Date</th></tr>
+	  </thead>
+	  <tbody>
+	    {% for CCA in CCAs1 %}
+	    <tr>
+	  	  <td>
+          {{ CCA.name }}
+	  	  </td>
+	  	  <td>
+          {{ CCA.venue }}
+	  	  </td>
+        <td>
+          {{ CCA.category }}
+        </td>
+	  	  <td>
+	  	  {{ CCA.description }} 
+	  	  </td>
+	      <td>
 	      {{ CCA.date }}
-	    </td>
-	  </tr>
-	  {% endfor %}
-	</tbody>
-      </table>
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+  </table>
 
-      <p>CCAs s/he is interested</p>
-      <table class="table table-bordered table-striped" >
-	<thead>
-	  <tr><th width="70%">Name</th><th>Location</th><th>Description</th><th>Date</th></tr>
-	</thead>
-	<tbody>
-	  {% for CCA in CCAs2 %}
-	  <tr>
-	  	<td>
-          {{ CCA.CCA_name }}
-	  	</td>
-	  	<td>
-          {{ CCA.CCA_location }}
-	  	</td>
-	  	<td>
-	  	  {{ CCA.CCA_description }} 
-	  	</td>
-	    <td>
-	      {{ CCA.date }}
-	    </td>
-	  </tr>
-	  {% endfor %}
-	</tbody>
-      </table>
-    </div>
-
-    <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap.js"></script>
-  </body>
-</html>
+  <p>CCAs s/he is interested</p>
+  <table class="table table-bordered table-striped" >
+	  <thead>
+	    <tr><th class="table-header">Name</th><th class="table-header">Venue</th><th class="table-header">Category</th><th width="50%" class="table-header">Description</th><th class="table-header">Date</th></tr>
+	  </thead>
+	  <tbody>
+	    {% for CCA in CCAs2 %}
+	    <tr>
+	  	  <td>
+          {{ CCA.name }}
+	  	  </td>
+	  	  <td>
+          {{ CCA.venue }}
+	  	  </td>
+        <td>
+          {{ CCA.category }}
+        </td>
+	  	  <td>
+	  	    {{ CCA.description }} 
+	  	  </td>
+	      <td>
+	        {{ CCA.date }}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+  </table>
+{% endblock %}

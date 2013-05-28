@@ -1,49 +1,55 @@
 $(document).ready(function(){
     $('#slider').carousel({  
-        interval: 100; 
+        interval: 2000 
     });
 
-	$('#slider').hover(function(){
+	$('#slider').mouseover(function(){
 		$(this).carousel('pause');
 	});
 
-	$('#slide1').click(function(){
+	$('#slider').mouseout(function(){
+		$(this).carousel({
+			interval: 2000
+		})
+	});
+
+	$('#slide1').onclick(function(){
 		var num = 0;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide2').click(function(){
+	$('#slide2').onclick(function(){
 		var num = 1;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide3').click(function(){
+	$('#slide3').onclick(function(){
 		var num = 2;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide4').click(function(){
+	$('#slide4').onclick(function(){
 		var num = 3;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide5').click(function(){
+	$('#slide5').onclick(function(){
 		var num = 4;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide6').click(function(){
+	$('#slide6').onclick(function(){
 		var num = 5;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);
 	});
 
-	$('#slide7').click(function(){
+	$('#slide7').onclick(function(){
 		var num = 6;
 		document.alert("does not work!");
 		$('.carousel').carousel(num);

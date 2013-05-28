@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>NUS CCA Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+  </head>
+  <body>
+    <div class="container-fluid"> 
+
+      <!-- Top bar --> 
+      <div class="row-fluid top-container">  
+	<div class="row-fluid">
+	  <img class="logo" src="../images/nuslogo.jpg">
+	</div>
+        <!--
+        <div>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=http://nusccagu.appspot.com/" onclick="javascript:window.open(this.href,
+            '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" target="_blank">
+            <img src="/images/fb-32.jpg" alt="Share on Facebook"/>
+          </a>
+
+          <a href="https://plus.google.com/share?url=http://nusccagu.appspot.com/" onclick="javascript:window.open(this.href,
+            '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+            <img src="/images/gplus-32.png" alt="Share on Google+"/>
+          </a>
+        </div> --><!--share on social websites: format and position are not proper-->
+
+
+	<div class="span4 offset8 signin-align">
+	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
+	</div>
+      </div>
+      <!-- End of top bar -->
+
+    <!-- Main navigation -->
+    <div class = "navbar">
+      <div class = "navbar-inner">
+        <ul class = "nav">
+          <li class="divider-vertical"></li>
+          <li> <a href="/index"><i class="icon-home"></i>Home</a> </li>
+          <li class="divider-vertical"></li>
+          <li class="dropdown"> 
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><i class="icon-user"></i>Profile<b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/profile">View Your Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="/editprofile">Edit Your Profile</a></li>
+            </ul>
+          </li>
+          <li class="divider-vertical"></li>
+          <li> <a href="/search"><i class="icon-search"></i>Search</a> </li>
+          <li class="divider-vertical"></li>
+          <li class="dropdown"> 
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><i class="icon-list-alt"></i>View<b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/view">Overview</a></li>
+              <li class="divider"></li>
+              <li><a href="/viewbyhall">View by halls</a></li>
+              <li class="divider"></li>
+              <li><a href="/viewbycategory">View by category</a></li>
+              <li class="divider"></li>
+              <li><a href="/viewbysearch">Search</a></li>
+            </ul>  
+          </li>
+          <li class="divider-vertical"></li>
+        </div> 
+    </div> <!--will be inherited by all the others-->
+
+    <!--children can change the following part-->
+    {% block content %} {% endblock%}
+    
+    </div>
+
+  <footer class="footer">
+       
+  </footer>
+    
+    <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.js"></script>
+  </body>
+</html>
