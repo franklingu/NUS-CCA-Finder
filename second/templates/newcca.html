@@ -1,5 +1,22 @@
-
+<!--for editors: backend double checking is needed!!!-->
 {% extends 'base1.html' %}
 
 {% block content %}
+  <div class="row">
+  	<div class="span4 offset4">
+  	  <h2 class="success">Welcome to editing page</h2>
+  	  Info of a new CCA
+  	</div>
+  </div>
+  <div class="span9 offset1">
+  	<form action="#" method="post" enctype="multipart/form-data">
+  	  CCA Name: <input type="text" placeholder="CCA Name" name="cca_name">
+  	  CCA Venue: <input type="text" placeholder="CCA Venue" name="cca_venue">
+  	  CCA Category: <input type="text" placeholder="CCA Category" name="cca_category">
+  	  CCA Descrption: <textarea name="cca_desc"></textarea>
+  	  CCA Youtube Link: <input type="text" placeholder="Youtube link, leave blank if none" name="youbelink">
+  	  <input type="submit" value="Add" class="btn">
+  	  <a href="/index" class="btn btn-primary">Cancel</a>
+  	</form>
+  </div>
 {% endblock %}

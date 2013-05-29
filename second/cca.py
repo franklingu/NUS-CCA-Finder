@@ -279,6 +279,90 @@ class ViewByHall(webapp2.RequestHandler):
     else:
       self.redirect(self.request.host_url)
 
+class ViewTemasek(webapp2.RequestHandler):
+  """view temasek"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('temasek.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewEusoff(webapp2.RequestHandler):
+  """view eusoff"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('eusoff.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewKR(webapp2.RequestHandler):
+  """view kr"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('kentridge.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewKE(webapp2.RequestHandler):
+  """view ke"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('kingedward.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewRaffles(webapp2.RequestHandler):
+  """view raffles"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('raffles.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewSheares(webapp2.RequestHandler):
+  """view sheares"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('sheares.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
 class ViewByCategory(webapp2.RequestHandler):
   """request handler for view by category search"""
   def get(self):
@@ -343,6 +427,12 @@ app = webapp2.WSGIApplication([('/index', MainPage),
                                ('/display', Display),
                                ('/view', View),
                                ('/viewbyhall',ViewByHall),
+                               ('/vieweusoff',ViewEusoff),
+                               ('/viewkr',ViewKR),
+                               ('/viewke',ViewKE),
+                               ('/viewraffles',ViewRaffles),
+                               ('/viewsheares',ViewSheares),
+                               ('/viewtemasek',ViewTemasek),
                                ('/viewbycategory',ViewByCategory),
                                ('/viewbysearch',ViewBySearch),
                                ('/img', ImageDisplay),
