@@ -40,6 +40,7 @@ class Persons(db.Model):
   faculty = db.StringProperty()
   residence = db.StringProperty()
   interest = db.StringListProperty()
+  picture = db.BlobProperty()
   
 class CCA(db.Model):
   """Models a CCA by name location and description"""
@@ -194,7 +195,9 @@ class EditProfile(webapp2.RequestHandler):
     newProfile.year = int(self.request.get('person_year'))
     newProfile.faculty = self.request.get('person_faculty') 
     newProfile.residence = self.request.get('person_residence')
-    newProfile.interest = self.request.get('interest').split()
+    interesttags = self.request.get('person_interest')
+    newProfile.interest = interesttags.split()
+    err_exist = False
     if len(newProfile.interest) > 6:
       err_exist = True
       msg = "?error=TooManyInterests&continue_url=profile"

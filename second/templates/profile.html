@@ -19,7 +19,7 @@
 	  <div class="row">
 	  	<div class="span6 offset1">
 	      <attr title="only jpg/png/gif/ are supported">
-	      <img src="/img" class="img-circle"></img>
+	      <img src="/img" class="img-rounded" style="width: 120px;" />
 	      </attr>
 	    </div>
 
@@ -86,11 +86,12 @@
           {% endfor %}
            <br />
 	    </div>
-
+        
 	    <div class="span12">
-	     	<br /><br /><br /><br />
+	     	<br />
 	        {% if complete == False %} <p class="text-success">Your profile is highly incomplete. Why do not you <strong><a href='/editprofile'>edit it</a></strong> now ?</p> {% endif %}
 	        {% if complete == True %} <p class="text-success">You want to update your profile? Update it <strong><a href='/editprofile'>here</a></strong> !</p>{% endif %} 
+	        <br /><br />
         </div>
 	  </div>
 	</fieldset>	     

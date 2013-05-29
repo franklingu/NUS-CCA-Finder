@@ -7,8 +7,16 @@
         <div class="span4">  
           <h3>NUS Halls</h3>  
           <p> </p>  
-          <div id="slider" class="carousel slide container" style="width: 400px;margin: 0 auto">  
-            <!-- Carousel items -->  
+          <div id="slider" class="carousel slide container" style="width: 400px;margin: 0 auto">
+            <ol class="carousel-indicators">
+              <li data-target="#slider" data-slide-to="0" class="active"></li>
+              <li data-target="#slider" data-slide-to="1"></li>
+              <li data-target="#slider" data-slide-to="2"></li>
+              <li data-target="#slider" data-slide-to="3"></li>
+              <li data-target="#slider" data-slide-to="4"></li>
+              <li data-target="#slider" data-slide-to="5"></li>
+              <li data-target="#slider" data-slide-to="6"></li>
+            </ol> 
           <div class="carousel-inner">  
         <div class="active item">
           <img src="/images/eusoff.jpg" />
@@ -66,6 +74,7 @@
                 </div>
               </div>
             </div>
+            {% endfor %}
           </div>
         </div> <!--end of accordion--> 
       </div> <!--end of row-->
