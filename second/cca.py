@@ -33,14 +33,12 @@ class MainPage(webapp2.RequestHandler):
 class Persons(db.Model):
   """Models a person identified by email"""
   email = db.StringProperty()
-  picture = db.BlobProperty()
   name = db.StringProperty()
   gender = db.BooleanProperty()
   year = db.IntegerProperty()
   faculty = db.StringProperty()
   residence = db.StringProperty()
   interest = db.StringListProperty()
-  picture = db.BlobProperty()
   
 class CCA(db.Model):
   """Models a CCA by name location and description"""
@@ -52,16 +50,20 @@ class CCA(db.Model):
   joined = db.StringProperty()
   date = db.DateTimeProperty(auto_now_add=True)
 
+class Picture(db.Model):
+  content = db.BlobProperty()
+
 #need to be more sure about this one
 class ImageDisplay(webapp2.RequestHandler):
   def get(self):
     parent_key = db.Key.from_path('Persons', users.get_current_user().email())
-    person = db.get(parent_key)
-    if person.picture:
-      self.response.headers['Content-Type'] = 'image/png'
-      self.response.out.write(person.picture)
+    photos = db.GqlQuery("SELECT * FROM Picture WHERE ANCESTOR IS :1", parent_key)
+    if photos:
+      for photo in photos:
+        self.response.headers['Content-Type'] = 'image/png'
+        self.response.out.write(photo.content)
     else:
-      self.response.out.write('No image')
+      self.redirect('/error'+'?error=No Image&continue_url=editprofile')
 
 #event handlers
 #login event
@@ -107,8 +109,8 @@ class Profile(webapp2.RequestHandler):
         self.response.out.write(template.render(template_values))
       else:
         #if the user have completed the profile
-        query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join=True ORDER BY date DESC", parent_key)
-        query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join=False ORDER BY date DESC", parent_key)
+        query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined='True' ORDER BY date DESC", parent_key)
+        query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined='False' ORDER BY date DESC", parent_key)
         template_values = {
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
@@ -147,7 +149,7 @@ class EditProfile(webapp2.RequestHandler):
           'year': "",
           'faculty': "",
           'residence': "",
-          'interest': "None",
+          'interest': "",
         }
         template = jinja_environment.get_template('editprofile.html')
         self.response.out.write(template.render(template_values))
@@ -179,14 +181,28 @@ class EditProfile(webapp2.RequestHandler):
       newProfile.put()
     
     newProfile = Persons(key_name=users.get_current_user().email())
-    newProfile.name = self.request.get('person_name')
-
-    if self.request.get('face_img'):
-      picture = images.resize(self.request.get('face_img'), 200, 200)
-      newProfile.picture = db.Blob(picture)
-    else: 
-      self.redirect('/errormsg' + "?error=NoFileChosen&continue_url=profile")
-
+    if self.request.get('person_name')!='':
+      newProfile.name=self.request.get('person_name')
+    #check an img
+    if self.request.get('face_img')!='':
+      try:
+        img = images.resize(self.request.get('face_img'), 200, 200)
+        picture = Picture(parent=parent_key)
+        picture.content = db.Blob(img)
+        #delete prev uploads
+        photo = db.GqlQuery("SELECT * FROM Picture WHERE ANCESTOR IS :1", parent_key)
+        for item in photo:
+          item.delete()
+        #save new one
+        picture.put()
+      except TypeError: #does not redirect
+        self.redirect("/errormsg?error=Not a supported type&continue_url=profile")
+      except:
+        self.redirect("/errormsg?error=Unexpected error&continue_url=profile")
+    else: #cannot detect no-file situation
+      err_exist = True
+      msg = "?error=No File Chosen&continue_url=profile"
+    #determine gender
     if self.request.get('person_gender') == "Male":
       newProfile.gender = True
     else:
@@ -200,10 +216,10 @@ class EditProfile(webapp2.RequestHandler):
     err_exist = False
     if len(newProfile.interest) > 6:
       err_exist = True
-      msg = "?error=TooManyInterests&continue_url=profile"
+      msg = "?error=Too Many Interests&continue_url=profile"
     if newProfile.name == "None" or newProfile.name == "default" or newProfile.name == "":
       err_exist = True
-      msg = "?error=NameIsIllegal&continue_url=profile"
+      msg = "?error=Name Is Illegal&continue_url=profile"
 
     if err_exist:
       self.redirect('/errormsg'+msg)
@@ -235,8 +251,8 @@ class Display(webapp2.RequestHandler):
     # Retrieve person
     parent_key = db.Key.from_path('Persons', target)
 
-    query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join = True ORDER BY date DESC", parent_key)
-    query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND CCA_join = False ORDER BY date DESC", parent_key)
+    query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined = 'True' ORDER BY date DESC", parent_key)
+    query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined = 'False' ORDER BY date DESC", parent_key)
 
     template_values = {
       'user_mail': users.get_current_user().email(),
@@ -248,7 +264,7 @@ class Display(webapp2.RequestHandler):
     template = jinja_environment.get_template('display.html')
     self.response.out.write(template.render(template_values))
 
-class View(webapp2.RequestHandler):
+class ViewGuide(webapp2.RequestHandler):
   """enable user see the view page"""
   def get(self):
     #things to put in
@@ -279,87 +295,23 @@ class ViewByHall(webapp2.RequestHandler):
     else:
       self.redirect(self.request.host_url)
 
-class ViewTemasek(webapp2.RequestHandler):
+class ViewHalls(webapp2.RequestHandler):
   """view temasek"""
   def get(self):
     user = users.get_current_user()
     if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('temasek.html')
-      self.response.out.write(template.render(template_values))
-    else:
-      self.redirect(self.request.host_url)
-
-class ViewEusoff(webapp2.RequestHandler):
-  """view eusoff"""
-  def get(self):
-    user = users.get_current_user()
-    if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('eusoff.html')
-      self.response.out.write(template.render(template_values))
-    else:
-      self.redirect(self.request.host_url)
-
-class ViewKR(webapp2.RequestHandler):
-  """view kr"""
-  def get(self):
-    user = users.get_current_user()
-    if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('kentridge.html')
-      self.response.out.write(template.render(template_values))
-    else:
-      self.redirect(self.request.host_url)
-
-class ViewKE(webapp2.RequestHandler):
-  """view ke"""
-  def get(self):
-    user = users.get_current_user()
-    if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('kingedward.html')
-      self.response.out.write(template.render(template_values))
-    else:
-      self.redirect(self.request.host_url)
-
-class ViewRaffles(webapp2.RequestHandler):
-  """view raffles"""
-  def get(self):
-    user = users.get_current_user()
-    if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('raffles.html')
-      self.response.out.write(template.render(template_values))
-    else:
-      self.redirect(self.request.host_url)
-
-class ViewSheares(webapp2.RequestHandler):
-  """view sheares"""
-  def get(self):
-    user = users.get_current_user()
-    if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url),
-        }
-      template = jinja_environment.get_template('sheares.html')
-      self.response.out.write(template.render(template_values))
+      hall = self.request.get('name')
+      if hall=="" or hall==None:
+        self.redirect('/errormsg'+'?Illegal Operation&continue_url=index')
+      else:
+        sports = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:name AND category='sports' ORDER BY date DESC")
+        music = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:name AND category='music' ORDER BY date DESC")
+        template_values = {
+          'user_mail': users.get_current_user().email(),
+          'logout': users.create_logout_url(self.request.host_url),
+          }
+        template = jinja_environment.get_template(hall+'.html')
+        self.response.out.write(template.render(template_values))
     else:
       self.redirect(self.request.host_url)
 
@@ -395,14 +347,86 @@ class ViewCCA(webapp2.RequestHandler):
   def get(self):
     user = users.get_current_user().email()
     if user:
-      template_values = {
-        'user_mail': users.get_current_user().email(),
-        'logout': users.create_logout_url(self.request.host_url)
-        }
-      template = jinja_environment.get_template('viewCCA.html')
-      self.response.out.write(template.render(template_values))
+      name = self.request.get('name')
+      venue = self.request.get('venue')
+      if name == None or name == "":
+        self.redirect('/errormsg'+'?error=Unexpected Error With Get&continue_url=index')
+
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:name")
+      if ccas:
+        if  True:
+          template_values = {
+            'user_mail': users.get_current_user().email(),
+            'logout': users.create_logout_url(self.request.host_url),
+            'ccas': ccas,
+          }
+          template = jinja_environment.get_template('viewcca.html')
+          self.response.out.write(template.render(template_values))
+        else:
+          self.redirect('/errormsg'+'?error=UnexpectedErrorInDB&continue_url=index')
+      else:
+        self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
     else:
       self.redirect(self.request.host_url)
+
+class AddCCA(webapp2.RequestHandler):
+  def get(self):
+    user = users.get_current_user().email()
+    if user:
+      #tesing block go here
+      if True:
+        template_values = {
+          'user_mail': users.get_current_user().email(),
+          'logout': users.create_logout_url(self.request.host_url)
+          }
+        template = jinja_environment.get_template('newcca.html')
+        self.response.out.write(template.render(template_values))
+      else:
+        self.redirect('/errormsg'+'?error=NotAuthorized&continue_url=index')
+    else:
+      self.redirect(self.request.host_url)
+
+  def post(self):
+    #add a cca; checking is not done yet
+    name = self.request.get('cca_name')
+    if name:
+      cca = CCA(key_name=name)
+      cca.name = name
+      cca.venue = self.request.get('cca_venue')
+      cca.category = self.request.get('cca_category')
+      cca.description = self.request.get('cca_desc')
+      cca_videolink = self.request.get('youtubelink')
+      cca.joined = 'root'
+      cca.put()
+      self.redirect('/index')
+    else:
+      self.redirect('/errormsg'+'?error=EmptyInput&continue_url=addcca')
+
+class EditCCA(webapp2.RequestHandler):
+  """edit profile:only admins can can see"""
+  def get(self):
+    user = users.get_current_user().email()
+    if user:
+      if True: #we set the name as a key_name, so we will always find it
+        cca_name = self.request.get('name')
+        cca_venue = self.request.get('venue')
+        cca = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+        if cca:
+          if cca.count()==1:
+            template_values = {
+              'user_mail': users.get_current_user().email(),
+              'logout': users.create_logout_url(self.request.host_url),
+              'cca': cca,
+            }
+            template = jinja_environment.get_template('editcca.html')
+            self.response.out.write(template.render(template_values))
+          elif cca.count()>1:
+            self.redirect('/errormsg'+'?error=UnexpectedErrorInDB&continue_url=index')
+        else:
+          self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
+    else:
+      self.redirect(self.request.host_url)
+
 
 class ErrorDealing(webapp2.RequestHandler):
   def get(self):
@@ -425,16 +449,14 @@ app = webapp2.WSGIApplication([('/index', MainPage),
                                ('/Login',Login),
                                ('/search', Search),
                                ('/display', Display),
-                               ('/view', View),
+                               ('/view', ViewGuide),
                                ('/viewbyhall',ViewByHall),
-                               ('/vieweusoff',ViewEusoff),
-                               ('/viewkr',ViewKR),
-                               ('/viewke',ViewKE),
-                               ('/viewraffles',ViewRaffles),
-                               ('/viewsheares',ViewSheares),
-                               ('/viewtemasek',ViewTemasek),
                                ('/viewbycategory',ViewByCategory),
                                ('/viewbysearch',ViewBySearch),
+                               ('/viewhalls',ViewHalls),
+                               ('/addcca',AddCCA),
+                               ('/viewcca',ViewCCA),
+                               ('/editcca',EditCCA),
                                ('/img', ImageDisplay),
                                ('/errormsg',ErrorDealing)],
                               debug=True)

@@ -5,16 +5,18 @@
 	<div class="row">
 	  <div class="span4">
 	  	<div>
+        {% for cca in ccas %}
 	  		<dl class="dl-horizontal">
 	  		  <dt>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-	  		  <dd>cca.name</dd>
+	  		  <dd>{{ cca.name }}</dd>
 	  		  <dt>Venue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-	  		  <dd>cca.venue</dd>
+	  		  <dd>{{ cca.venue }}</dd>
 	  		  <dt>Category &nbsp;&nbsp;&nbsp;</dt>
-	  		  <dd>cca.category</dd>
+	  		  {{ cca.category }}</dd>
 	  		  <dt>Description</dt>
-	  		  <dd>cca.description</dt>
+	  		  <dd>{{ cca.description }}</dt>
 	  		</dl>
+        {% endfor %}
 	  	</div>
 
           <div class="span3 pull-right">
@@ -22,15 +24,15 @@
           {% for each in recommands %}
             <div class="accordion-group">
               <div class="accordion-heading">
-                <a class="accordion-toggle btn" data-toggle="collapse" data-parent="#recomd-cca" href="#cca1"> each.name </a>
+                <a class="accordion-toggle btn" data-toggle="collapse" data-parent="#recomd-cca" href="#cca1"> {{each.name}} </a>
               </div>
               <div class="accordion-body collapse" id="cca1">
                 <div class="accordion-inner">
-                  <p> each.decription </p>
+                  <p> {{each.decription}} </p>
                 </div>
               </div>
             </div>
-          {% end for %}
+          {% endfor %}
         </div>
 
         <a href="/interestcca" class="btn btn-primary">Interested</a>
@@ -38,7 +40,7 @@
           </div>
 
         <div class="row">
-          {% if admin %}You can <a href="/editcca">edit it</a>, or you can <a href="/addcca">add CCAs</a> {% end if %}
+          {% if admin %}You can <a href="/editcca">edit it</a>, or you can <a href="/addcca">add CCAs</a> {% endif %}
         </div>
       </div>     <!--left side bar-->
 
