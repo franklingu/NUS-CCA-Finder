@@ -10,13 +10,15 @@
   </div>
   <div class="span9 offset1">
   	<form action="#" method="post" enctype="multipart/form-data">
-  	  CCA Name: <input type="text" placeholder="CCA Name" name="cca_name" value="{{ name }}">
-  	  CCA Venue: <input type="text" placeholder="CCA Venue" name="cca_venue" value="{{ venue }}">
-  	  CCA Category: <input type="text" placeholder="CCA Category" name="cca_category" value="{{ venue }}">
-  	  CCA Descrption: <textarea name="cca_desc" value="{{ desc }}"></textarea>
-  	  CCA Youtube Link: <input type="text" placeholder="Youtube link, leave blank if none" name="youbelink" value="{{ link }}">
+  	  CCA Name: <input type="text" placeholder="CCA Name" name="cca_name" value="{{ cca.name }}">
+  	  CCA Venue: <input type="text" placeholder="CCA Venue" name="cca_venue" value="{{ cca.venue }}">
+  	  CCA Category: <input type="text" placeholder="CCA Category" name="cca_category" value="{{ cca.category }}">
+  	  CCA Descrption: <textarea name="cca_desc" value="{{ cca.description }}"></textarea>
+  	  CCA Youtube Link: <input type="text" placeholder="Youtube link, leave blank if none" name="youbelink" value="{{ cca.videolink }}">
   	  <input type="submit" value="Add" class="btn">
   	  <a href="/index" class="btn btn-primary">Cancel</a>
   	</form>
   </div>
+
+  </div> <!--close containder fluid in base1-->
 {% endblock %}

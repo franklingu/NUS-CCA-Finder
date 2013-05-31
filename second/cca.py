@@ -134,40 +134,8 @@ class EditProfile(webapp2.RequestHandler):
   """display edit profile page and post the inputs to db"""
   def get(self): #get mothed to display the page
     user = users.get_current_user()
-    if user: #logged in already
-      # Retrieve person
-      parent_key = db.Key.from_path('Persons', users.get_current_user().email())
-      person = db.get(parent_key)
-      if person == None:
-        #the user has not complete the profile
-        template_values = {
-          'user_mail': users.get_current_user().email(),
-          'logout': users.create_logout_url(self.request.host_url),
-          'complete': False,
-          'name': "",
-          'gender': "",
-          'year': "",
-          'faculty': "",
-          'residence': "",
-          'interest': "",
-        }
-        template = jinja_environment.get_template('editprofile.html')
-        self.response.out.write(template.render(template_values))
-      else:
-        #if the user have completed the profile
-        template_values = {
-          'user_mail': users.get_current_user().email(),
-          'logout': users.create_logout_url(self.request.host_url),
-          'complete': True,
-          'name': person.name,
-          'gender': person.gender,
-          'year': person.year,
-          'faculty': person.faculty,
-          'residence': person.residence,
-          'interest': person.interest,
-        }
-        template = jinja_environment.get_template('editprofile.html')
-        self.response.out.write(template.render(template_values))
+    if user: #there is no way to call this directly???
+      self.redirect('/profile#editprofile')
     else:
       self.redirect(self.request.host_url)
 
@@ -347,18 +315,18 @@ class ViewCCA(webapp2.RequestHandler):
   def get(self):
     user = users.get_current_user().email()
     if user:
-      name = self.request.get('name')
-      venue = self.request.get('venue')
-      if name == None or name == "":
+      cca_name = self.request.get('name')
+      cca_venue = self.request.get('venue')
+      if cca_name == None or cca_name == "":
         self.redirect('/errormsg'+'?error=Unexpected Error With Get&continue_url=index')
 
-      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:name")
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
       if ccas:
         if  True:
           template_values = {
             'user_mail': users.get_current_user().email(),
             'logout': users.create_logout_url(self.request.host_url),
-            'ccas': ccas,
+            'cca': ccas.get(),
           }
           template = jinja_environment.get_template('viewcca.html')
           self.response.out.write(template.render(template_values))
@@ -389,7 +357,46 @@ class AddCCA(webapp2.RequestHandler):
   def post(self):
     #add a cca; checking is not done yet
     name = self.request.get('cca_name')
-    if name:
+    if name!='':
+      cca = CCA(key_name=name)
+      cca.name = name
+      cca.venue = self.request.get('cca_venue')
+      cca.category = self.request.get('cca_category')
+      cca.description = self.request.get('cca_desc')
+      cca_videolink = self.request.get('youtubelink')
+      cca.joined = 'root'
+      #check whether a cca with the same name exist or not, to be implemented
+      cca.put()
+      self.redirect('/index')
+    else:
+      self.redirect('/errormsg'+'?error=EmptyInput&continue_url=addcca')
+
+class EditCCA(webapp2.RequestHandler):
+  """edit profile:only admins can can see"""
+  def get(self):
+    user = users.get_current_user().email()
+    if user:
+      if True: #if admin, to be implemented
+        cca_name = self.request.get('name')
+        cca_venue = self.request.get('venue')
+        ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+        if ccas:
+          if True: #to check no of results, to be implemmented
+            template_values = {
+              'user_mail': users.get_current_user().email(),
+              'logout': users.create_logout_url(self.request.host_url),
+              'cca': ccas.get(),
+            }
+            template = jinja_environment.get_template('editcca.html')
+            self.response.out.write(template.render(template_values))
+        else:
+          self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
+    else:
+      self.redirect(self.request.host_url)
+
+  def post(self):
+    name = self.request.get('cca_name')
+    if name!='':
       cca = CCA(key_name=name)
       cca.name = name
       cca.venue = self.request.get('cca_venue')
@@ -402,31 +409,33 @@ class AddCCA(webapp2.RequestHandler):
     else:
       self.redirect('/errormsg'+'?error=EmptyInput&continue_url=addcca')
 
-class EditCCA(webapp2.RequestHandler):
-  """edit profile:only admins can can see"""
+class ShowInterest(webapp2.RequestHandler):
   def get(self):
     user = users.get_current_user().email()
     if user:
-      if True: #we set the name as a key_name, so we will always find it
-        cca_name = self.request.get('name')
-        cca_venue = self.request.get('venue')
-        cca = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
-        if cca:
-          if cca.count()==1:
-            template_values = {
-              'user_mail': users.get_current_user().email(),
-              'logout': users.create_logout_url(self.request.host_url),
-              'cca': cca,
-            }
-            template = jinja_environment.get_template('editcca.html')
-            self.response.out.write(template.render(template_values))
-          elif cca.count()>1:
-            self.redirect('/errormsg'+'?error=UnexpectedErrorInDB&continue_url=index')
+      cca_name = self.request.get('name')
+      cca_venue = self.request.get('venue')
+      interested = self.request.get('join')
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+      if ccas:
+        cca=ccas.get()
+        parent_key = db.Key.from_path('Persons', users.get_current_user().email())
+        person = db.get(parent_key)
+        target = CCA(parent=parent_key)
+        if interested=='true':
+          target.joined='interest'
+        elif interested=='false':
+          target.joined='joined'
         else:
-          self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
+          self.redirect('/errormsg?error=Request is illegal&continue_url=profile')
+        target.name=cca.name
+        target.venue=cca.venue #these two should be enough
+        target.put()
+        self.redirect('/profile')
+      else:
+        self.redirect('/errormsg?error=CCA Not Found&continue_url=index')
     else:
       self.redirect(self.request.host_url)
-
 
 class ErrorDealing(webapp2.RequestHandler):
   def get(self):
