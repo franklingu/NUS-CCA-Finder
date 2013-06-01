@@ -2,11 +2,16 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-  <form  action="/display" method="post">  
+  <form  action="/display" method="post"> 
+  <div class = "jumbotron masthead">
+  <div class = "container" style = "margin-bottom: 10%"> 
 	  <fieldset>
-		  <p>Enter NUS email of your friend:</p>
-      <input type="text" name="friend_email" /><br />
-      <input type="submit" name="submit_email" />
+		  <p>Enter the NUS email of your friend to find out what CCA&#39;s h/she is taking <b> (a.k.a Friendster Up!)</b>:</p>
+	<img class = "friendster-pic" src = "/images/brian-and-stewie-pic.jpg"><br> <br>
+     <input type="text" name="friend_email" placeholder = "Enter Email here!"/><br />
+     <input type="submit" name="submit_email" class="btn btn-primary" />
 	  </fieldset>
+	</div>
+</div>
   </form>	
 {% endblock %}	
