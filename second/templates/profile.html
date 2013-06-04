@@ -24,9 +24,14 @@
 	  </div>
 	  <div class="row">
 	  	<div class="span6 offset1">
-	      <attr title="only jpg/png/gif/ are supported">
+	  		{% if complete == True %}
+	      <attr title="only jpg/png/gif are supported">
 	      <img src="/img" class="img-rounded" style="width: 120px;" />
 	      </attr>
+	        {% endif %}
+	        {% if complete == False %}
+	        No Picture found!
+	        {% endif %}
 	    </div>
 
 	      <div class="span5">
@@ -35,29 +40,53 @@
 	  </div>
 	  <div class="span4">
 	    <div class="span2"> 
-	      Name: {{ name }}
+	      Name: {% if complete == True %}
+	              {{ person.name }}
+	            {% endif %}
+	            {% if complete == False %}
+	               Annonymous
+	            {% endif %}
 	    </div>
 	  </div>
 	  <div class="span4">
 	    <div class="span2"> 
-	      Gender: {% if gender == True %} Male {% endif %}
-	              {% if gender == False %} Female {% endif %}
-	              {% if gender == "default" %} default {% endif %}
+	      Gender: {% if complete == True %}
+	                {% if gender == True %} Male {% endif %}
+	                {% if gender == False %} Female {% endif %}
+	              {% endif %}
+	              {% if complete == False %}
+	                Unknown
+	              {% endif %}
 	    </div>
 	  </div>
       <div class="span4">
 	    <div class="span2">
-	      Year: {{ year }}
+	      Year: {% if complete == True %}
+	              {{ person.year }}
+	            {% endif %}
+	            {% if complete == False %}
+	              Unknown
+	            {% endif %}
 	    </div>
 	  </div>
 	  <div class="span4">
 	    <div class="span2">
-	      Faculty: {{ faculty }}
+	   Faculty: {% if complete == True %}
+	              {{ person.faculty }}
+	            {% endif %}
+	            {% if complete == False %}
+	              Unknown
+	            {% endif %}
 	    </div>
 	  </div>
 	  <div class="span4">    
 	    <div class="span2">
-          Residence: {{ residence }}
+     Residence: {% if complete == True %}
+	              {{ person.residence }}
+	            {% endif %}
+	            {% if complete == False %}
+	              Unknown
+	            {% endif %}
 	    </div>
 	  </div>
 	      </div>
@@ -73,23 +102,38 @@
       	  </div>
 	    <div class="span12">
 	      Interest:<br /> 
-	      {% for interest in interests %}
-	         {{ interest }}
-	      {% endfor %}
+	      {% if complete == True %}
+		      {% for interest in interests %}
+		         {{ interest }}
+		      {% endfor %}
+	      {% endif %}
+	      {% if complete == False %}
+	        Unknown
+	      {% endif %}
 	      <br />
 	    </div>
 	    <div class="span12">
            CCAs you are currently in:<br />
-           {% for CCA in CCAs1 %}
+           {% if complete == True %}
+		      {% for CCA in CCAs1 %}
                {{ CCA }}
-           {% endfor %}
+              {% endfor %}
+	      {% endif %}
+	      {% if complete == False %}
+	        Unknown
+	      {% endif %}
            <br />
 	    </div>
 	    <div class="span12">
 	      CCAs you are interested:<br />
-	      {% for CCA in CCAs2 %}
-              {{ CCA }}
-          {% endfor %}
+	      {% if complete == True %}
+		      {% for CCA in CCAs2 %}
+               {{ CCA }}
+              {% endfor %}
+	      {% endif %}
+	      {% if complete == False %}
+	        Unknown
+	      {% endif %}
            <br />
 	    </div>
         

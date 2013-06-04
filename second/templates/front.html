@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../stylesheets/docs2.css">
     <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
     <link type="text/css" rel="stylesheet" href="../stylesheets/zocial.css">
   </head>
@@ -15,18 +14,18 @@
 
       <!-- Top bar --> 
       <div class="row-fluid top-container">  
-	<div class="row-fluid">
-		<div class = "span4">
-			<a href="http://www.nus.edu.sg/">
-			<img class="logo" src="../images/nuslogo.jpg">
-		</a>
-		</div>
-		<div class = "span4" style = "text-align: center">
-			<a href="/">
-			<img class = "logo" src = "../images/ccalogo.png">
-		</a>
-		</div>
+	<div class = "span4">
+      <img class="logo" src="../images/nuslogo.jpg">
+    </div>
+    <div class = "span4" style = "text-align: center">
+      <a href="/">
+      <img class="logo" src = "../images/ccalogo.png">
+      </a>
+    </div>
+	<div class="span3 offset9 signin-align">
+	  <span> <a href="#login-pop" data-toggle="modal"><img src="../images/loginbutton.jpg" style="width: 100px; padding-bottom: 10px;"></a></span>
 	</div>
+      </div>
       <!-- End of top bar -->
 
       <!-- Main navigation -->
@@ -38,57 +37,65 @@
 	</div> 
       </div>
 
-<div class="jumbotron masthead">
-  <div class="container" style = "margin-bottom: 7%">
-    <h1>Hello NUS!</h1>
-    <p>Want to find out more about CCA&#39;s around you?<br>
-    Eager to know what CCA&#39;s your friends are taking?<br>
-    CCA-Finder is the one-stop shop for all things <b>C-C-A!!</b></p>
-	<a href="/Login" class="zocial openid">Sign in with NUS OpenID</a><br><br>
-	  	<a href = "#" class = "zocial facebook">Sign in with facebook</a><br><br>
-	  	<a href="#" class="zocial google">Sign in with Google</a><br><br>
-  </div>
-</div>
-
-<!--
       <div class="row-fluid">
-	<div class="span6">
-	  <img class="giftpic" src="../images/CCA.png">
-	</div>
-	<div class="span6">
-	  <div class="top-pad-one" style = "text-align: center;margin-right: 20%">
-	  	<a href="/Login" class="zocial openid">Sign in with NUS OpenID</a><br><br>
-	  	<a href = "#" class = "zocial facebook">Sign in with facebook</a><br><br>
-	  	<a href="#" class="zocial google">Sign in with Google</a><br><br>
-	  	 <h4> Are you an NUS student?<br></h4>
-	    <h4> Want to find out more about CCAs around you? <br></h4>
-	     <h4> With CCA Finder, CCA finding is easier than ever!</h4>
-	      <h4>Check out what CCA&#39;s your friends have taken up!</h4>
+	<div class="span7 offset1" >
+	  <div class="top-pad-one">
+	    <p> Want to find out more about CCAs around you? <br>
+	      Want to let others know about what CCAs are in store for them?</p>
+	    
+	    <p> With CCA Finder, CCA finding and uploading is easier than ever!</p>
+	    
+	    <p> Find out more about CCAs around in NUS.<br>
+	      Check out what CCAs your friends have taken up.</p>
 	  </div>
 	</div>
-      </div> 
-  -->
-    </div>
-  <footer class="footer" style = "margin-top: 5%;">
-    <div class="container-fluid">
-      <div class="navbar navbar-inner  navbar-fixed-bottom">
-        <!-- AddThis Button BEGINS -->
-        <div style="float:right; width:55%;">
-          <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-            <a class="addthis_button_preferred_1"></a>
-            <a class="addthis_button_preferred_2"></a>
-            <a class="addthis_button_preferred_3"></a>
-            <a class="addthis_button_preferred_4"></a>
-            <a class="addthis_button_compact"></a>
-            <a class="addthis_counter addthis_bubble_style"></a>
-          </div>
-        </div>
-        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a494685fdfa90c"></script>
-        <!-- AddThis Buttons END -->
+	<div class="span3 " style="border-left: solid 1px #c0c0c0;">
+		<div>
+		  <ul style="list-style-type: none;">
+		  	<li><i class="icon-heart"></i><a href="http://www.nusdiary.com/">NUSDiary</a></li>
+		  	<li><i class="icon-heart"></i><a href="http://www.nus.edu.sg/osa/ssc/services/co-curricular-activities-cca-certificate/faq-on-cca-certificates">OSA page about CCA certificates</a></li>
+		  	<li><i class="icon-heart"></i><a href="http://www.nus.edu.sg/osa/images/so/downloads/eca-card.pdf">NUS ECA file</a></li>
+		  </ul>
+		</div><!--need more links and more content on this side-->
+	</div>
       </div>
     </div>
-  </footer>
+
+    <div id="login-pop" class="modal hide fade" aria-labelledby="modallabel" aria-hidden="true">
+      <div class="modal-header">
+      	<h3 id="modallabel">Login</h3>
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+      </div>
+      <div class="modal-body">
+      	<form class="form-horizontal">
+		  <div class="control-group">
+		    <label class="control-label" for="inputEmail">Email</label>
+		    <div class="controls">
+		      <input type="text" id="inputEmail" placeholder="Email">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="inputPassword">Password</label>
+		    <div class="controls">
+		      <input type="password" id="inputPassword" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn">Sign in</button>
+		    </div>
+		  </div>
+		</form>
+		<div>
+			<br /> <br />
+		  Login with <br />
+		  <a href="/Login" class="zocial openid">NUS OpenID</a>
+      	  <a href="#" class="zocial facebook">Facebook</a>
+          <a href="#" class="zocial googleplus">Google+</a>
+		</div>
+      </div>
+    </div>
+
     <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/scripts/bootstrap.js"></script>
   </body>

@@ -6,8 +6,7 @@
 
 /* For the logo */
 .logo {
-  height: 100px;
-  
+    height:100px;
 }
 
 /* For the sign-in on the right of the top bar */
@@ -20,14 +19,7 @@
 
 /* For the picture of the gift */
 .main-pic {
-    height: 18%;
-    width: 18%;
-    /*height: 350px; */
-}
-
-.friendster-pic{
-    height:18%;
-    width: 18%;
+    height: 350px;
 }
 
 /* Shift the text down 1cm */

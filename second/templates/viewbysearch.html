@@ -1,0 +1,14 @@
+<!-- view page by search a cca extends base1-->
+{% extends 'base1.html' %}
+
+{% block content %}
+  <form  action="#" method="post"> <!--not defined yet--> 
+	  <fieldset>
+	  <p>Enter the name of CCA:</p>
+      <input type="text" name="cca_name" /><br />
+      <p>Enter the venue of CCA:</p>
+      <input type="text" name="cca_vanue" /><br />
+      <input type="submit" name="submit_email" />
+	  </fieldset>
+  </form>
+{% endblock %}

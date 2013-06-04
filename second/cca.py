@@ -13,6 +13,7 @@ from google.appengine.api import users
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
 
+
 # main page event handler
 class MainPage(webapp2.RequestHandler):
   """ Front page for those logged in """
@@ -46,7 +47,7 @@ class CCA(db.Model):
   venue = db.StringProperty()
   category = db.StringProperty()
   description = db.StringProperty(multiline=True)
-  videolink = db.LinkProperty()
+  videolink = db.StringProperty()
   joined = db.StringProperty()
   date = db.DateTimeProperty(auto_now_add=True)
 
@@ -58,10 +59,11 @@ class ImageDisplay(webapp2.RequestHandler):
   def get(self):
     parent_key = db.Key.from_path('Persons', users.get_current_user().email())
     photos = db.GqlQuery("SELECT * FROM Picture WHERE ANCESTOR IS :1", parent_key)
-    if photos:
-      for photo in photos:
-        self.response.headers['Content-Type'] = 'image/png'
-        self.response.out.write(photo.content)
+
+    if photos.count()!=0:
+      photo=photos.get()
+      self.response.headers['Content-Type'] = 'image/png'
+      self.response.out.write(photo.content)
     else:
       self.redirect('/error'+'?error=No Image&continue_url=editprofile')
 
@@ -96,12 +98,7 @@ class Profile(webapp2.RequestHandler):
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
           'complete': False,
-          'name': "",
-          'gender': "",
-          'year': "",
-          'faculty': "",
-          'residence': "",
-          'interests': "None",
+          'person': person,
           'CCAs1': "",
           'CCAs2': "",
         }
@@ -115,12 +112,7 @@ class Profile(webapp2.RequestHandler):
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
           'complete': True,
-          'name': person.name,
-          'gender': person.gender,
-          'year': person.year,
-          'faculty': person.faculty,
-          'residence': person.residence,
-          'interests': person.interest,
+          'person': person,
           'CCAs1': query1,
           'CCAs2': query2,
         }
@@ -163,7 +155,7 @@ class EditProfile(webapp2.RequestHandler):
           item.delete()
         #save new one
         picture.put()
-      except TypeError: #does not redirect
+      except TypeError: #does not redirect now
         self.redirect("/errormsg?error=Not a supported type&continue_url=profile")
       except:
         self.redirect("/errormsg?error=Unexpected error&continue_url=profile")
@@ -272,8 +264,8 @@ class ViewHalls(webapp2.RequestHandler):
       if hall=="" or hall==None:
         self.redirect('/errormsg'+'?Illegal Operation&continue_url=index')
       else:
-        sports = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:name AND category='sports' ORDER BY date DESC")
-        music = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:name AND category='music' ORDER BY date DESC")
+        sports = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:1 AND category='sports' ORDER BY date DESC", name)
+        music = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:1 AND category='music' ORDER BY date DESC", name)
         template_values = {
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
@@ -320,7 +312,7 @@ class ViewCCA(webapp2.RequestHandler):
       if cca_name == None or cca_name == "":
         self.redirect('/errormsg'+'?error=Unexpected Error With Get&continue_url=index')
 
-      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
       if ccas:
         if  True:
           template_values = {
@@ -357,13 +349,14 @@ class AddCCA(webapp2.RequestHandler):
   def post(self):
     #add a cca; checking is not done yet
     name = self.request.get('cca_name')
+    venue = self.request.get('cca_venue')
     if name!='':
-      cca = CCA(key_name=name)
+      cca = CCA(key_name=(name+venue))
       cca.name = name
-      cca.venue = self.request.get('cca_venue')
+      cca.venue = venue
       cca.category = self.request.get('cca_category')
       cca.description = self.request.get('cca_desc')
-      cca_videolink = self.request.get('youtubelink')
+      cca.videolink = self.request.get('youtubelink')
       cca.joined = 'root'
       #check whether a cca with the same name exist or not, to be implemented
       cca.put()
@@ -379,7 +372,7 @@ class EditCCA(webapp2.RequestHandler):
       if True: #if admin, to be implemented
         cca_name = self.request.get('name')
         cca_venue = self.request.get('venue')
-        ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+        ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
         if ccas:
           if True: #to check no of results, to be implemmented
             template_values = {
@@ -416,7 +409,7 @@ class ShowInterest(webapp2.RequestHandler):
       cca_name = self.request.get('name')
       cca_venue = self.request.get('venue')
       interested = self.request.get('join')
-      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:cca_name AND venue=:cca_venue")
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
       if ccas:
         cca=ccas.get()
         parent_key = db.Key.from_path('Persons', users.get_current_user().email())
