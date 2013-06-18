@@ -4,24 +4,8 @@
 
 /* Base class
 ------------------------- */
-.jumbotron {
-  position: relative;
-  padding: 40px 0;
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
-  background: #020031; /* Old browsers */
-  background: -moz-linear-gradient(45deg,  #020031 0%, #6d3353 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6d3353)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* IE10+ */
-  background: linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-  -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-     -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-          box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-}
+
+
 .jumbotron h1 {
   font-size: 80px;
   font-weight: bold;
@@ -81,11 +65,11 @@
 
 /* Pattern overlay
 ------------------------- */
-.jumbotron .container {
+/*.jumbotron .container {
   position: relative;
   z-index: 2;
 }
-.jumbotron:after {
+/*.jumbotron:after {
   content: '';
   display: block;
   position: absolute;
@@ -96,33 +80,25 @@
   background: url(../img/bs-docs-masthead-pattern.png) repeat center center;
   opacity: .4;
 }
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1) {
-
-  .jumbotron:after {
-    background-size: 150px 150px;
-  }
-
-}
+*/
 /* Masthead (docs home)
 ------------------------- */
 
 .masthead {
-  padding: 10px 0 10px;
+  padding: 50px 0 50px;
   margin-bottom: 0;
   color: #fff;
 }
 .masthead h1 {
-  font-size: 60px;
-  line-height: 1;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 65px;
   letter-spacing: -2px;
 }
 .masthead p {
-  font-size: 20px;
+
+  font-size: 18px;
   font-weight: 200;
-  line-height: 1.25;
+
 }
 
 /* Textual links in masthead  */
@@ -137,4 +113,81 @@ only screen and (     -o-min-device-pixel-ratio: 2/1) {
   color: rgba(255,255,255,.25);
 }
 */
+/* Responsive
+-------------------------------------------------- */
+
+
+/* Tablet to desktop
+------------------------- */
+@media (min-width: 768px) and (max-width: 979px) {
+  /* Remove any padding from the body */
+  body {
+    padding-top: 0;
+  }
+  /* Widen masthead and social buttons to fill body padding */
+  .jumbotron {
+    margin-top: -20px; /* Offset bottom margin on .navbar */
+  }
+   .masthead h1 {
+    font-size: 58px;
+  }
+  .masthead p,
+  .masthead .btn {
+    font-size: 17px;
+  }
+
+}
+
+/* Tablet
+------------------------- */
+@media (max-width: 767px) {
+  /* Remove any padding from the body */
+  body {
+    padding-top: 0;
+  }
+
+  /* Widen masthead and social buttons to fill body padding */
+  .jumbotron {
+    padding: 40px 20px;
+    margin-top:   -20px; /* Offset bottom margin on .navbar */
+    margin-right: -20px;
+    margin-left:  -20px;
+  }
+  .masthead h1 {
+    font-size: 65px;
+  }
+  .masthead p,
+  .masthead .btn {
+    font-size: 18px;
+  }
+  
+}
+
+/* Landscape phones
+------------------------- */
+@media (max-width: 480px) {
+  /* Remove padding above jumbotron */
+  body {
+    padding-top: 0;
+  }
+
+  /* Change up some type stuff */
+  h2 small {
+    display: block;
+  }
+
+  /* Downsize the jumbotrons */
+  .jumbotron h1 {
+    font-size: 38px;
+  }
+  .jumbotron p,
+  .jumbotron .btn {
+    font-size: 13px;
+  }
+  .jumbotron .btn {
+    display: block;
+    margin: 0 auto;
+  }
+
+}
 

@@ -3,96 +3,72 @@
 <html>
   <head>
     <title> NUS CCA Finder</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+        <style type="text/css">
+      body {
+      	background: #158D90;
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
     <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+     <link type="text/css" rel="stylesheet" href="../stylesheets/mystyles.css">
+     <link type="text/css" rel="stylesheet" href="../stylesheets/docs2.css">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif|Lobster+Two' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="../stylesheets/zocial.css">
   </head>
   <body>
-    <div class="container-fluid"> 
-
-      <!-- Top bar --> 
-      <div class="row-fluid top-container">  
-	<div class = "span4">
-      <img class="logo" src="../images/nuslogo.jpg">
-    </div>
-    <div class = "span4" style = "text-align: center">
-      <a href="/">
-      <img class="logo" src = "../images/ccalogo.png">
-      </a>
-    </div>
-	<div class="span3 offset9 signin-align">
-	  <span> <a href="#login-pop" data-toggle="modal"><img src="../images/loginbutton.jpg" style="width: 100px; padding-bottom: 10px;"></a></span>
-	</div>
-      </div>
-      <!-- End of top bar -->
+    
 
       <!-- Main navigation -->
-      <div class = "navbar">
-	<div class = "navbar-inner">
-	  <ul class = "nav">
-	    <li> <a href="/">Home</a> </li>
-	  </ul>
-	</div> 
-      </div>
-
+      <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href = "/">NUS CCA Finder</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="active"><a href="/">Home</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<div class="container-fluid"> 
       <div class="row-fluid">
-	<div class="span7 offset1" >
-	  <div class="top-pad-one">
-	    <p> Want to find out more about CCAs around you? <br>
-	      Want to let others know about what CCAs are in store for them?</p>
-	    
-	    <p> With CCA Finder, CCA finding and uploading is easier than ever!</p>
-	    
-	    <p> Find out more about CCAs around in NUS.<br>
-	      Check out what CCAs your friends have taken up.</p>
+      	<div class="top-pad-one">
+      	<div class="span4 offset1">
+      		<img class = "main-logo" src="../images/nusccaimage.png">
+      </div>
+	<div class="span6 container">
+		<div class="jumbotron masthead" style = "text-align: center; margin-right: 9%; margin-left: 3%;">
+   <h1>Hello NUS!</h1>
+    <p style = "height: auto;">Want to find out more about CCA&#39;s around you?<br>
+    Eager to know what CCA&#39;s your friends are taking?<br>
+    CCA-Finder is the one-stop shop for all things <b>C-C-A!!</b></p>
+	<a href="/Login" class="zocial openid">Sign in with NUS OpenID</a><br><br>
+	  	<a href="#" class="zocial google">Sign in with Google</a><br><br>
+	  </div>
 	  </div>
 	</div>
-	<div class="span3 " style="border-left: solid 1px #c0c0c0;">
+	<div class="row-fluid">
+	<div class="span3 offset2" style="border-left: solid 1px #c0c0c0;">
 		<div>
 		  <ul style="list-style-type: none;">
-		  	<li><i class="icon-heart"></i><a href="http://www.nusdiary.com/">NUSDiary</a></li>
-		  	<li><i class="icon-heart"></i><a href="http://www.nus.edu.sg/osa/ssc/services/co-curricular-activities-cca-certificate/faq-on-cca-certificates">OSA page about CCA certificates</a></li>
-		  	<li><i class="icon-heart"></i><a href="http://www.nus.edu.sg/osa/images/so/downloads/eca-card.pdf">NUS ECA file</a></li>
+		  	<li><i class="icon-heart"></i><a href="http://www.nusdiary.com/" style = "color:#fff">NUSDiary</a></li>
+		  	<li><i class="icon-heart"></i><a style = "color:#fff" href="http://www.nus.edu.sg/osa/ssc/services/co-curricular-activities-cca-certificate/faq-on-cca-certificates">OSA page about CCA certificates</a></li>
+		  	<li><i class="icon-heart"></i><a href="http://www.nus.edu.sg/osa/images/so/downloads/eca-card.pdf" style = "color:#fff">NUS ECA file</a></li>
 		  </ul>
 		</div><!--need more links and more content on this side-->
 	</div>
-      </div>
-    </div>
-
-    <div id="login-pop" class="modal hide fade" aria-labelledby="modallabel" aria-hidden="true">
-      <div class="modal-header">
-      	<h3 id="modallabel">Login</h3>
-      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-      </div>
-      <div class="modal-body">
-      	<form class="form-horizontal">
-		  <div class="control-group">
-		    <label class="control-label" for="inputEmail">Email</label>
-		    <div class="controls">
-		      <input type="text" id="inputEmail" placeholder="Email">
-		    </div>
-		  </div>
-		  <div class="control-group">
-		    <label class="control-label" for="inputPassword">Password</label>
-		    <div class="controls">
-		      <input type="password" id="inputPassword" placeholder="Password">
-		    </div>
-		  </div>
-		  <div class="control-group">
-		    <div class="controls">
-		      <button type="submit" class="btn">Sign in</button>
-		    </div>
-		  </div>
-		</form>
-		<div>
-			<br /> <br />
-		  Login with <br />
-		  <a href="/Login" class="zocial openid">NUS OpenID</a>
-      	  <a href="#" class="zocial facebook">Facebook</a>
-          <a href="#" class="zocial googleplus">Google+</a>
-		</div>
+</div>
       </div>
     </div>
 

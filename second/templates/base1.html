@@ -1,43 +1,47 @@
+<!-- Front page: before log in -->
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>NUS CCA Finder</title>
+    <title> NUS CCA Finder</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+        <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 30px;
+        padding-right: 10px;
+      }
+    </style>
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
     <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
-    <!--<script src="https://hub.loginradius.com/include/js/LoginRadius.js" ></script>
-    <script type="text/javascript">      var options={};      options.login=true;         LoginRadius_SocialLogin.util.ready(function () { $ui = LoginRadius_SocialLogin.lr_login_settings;$ui.interfacesize = "";$ui.apikey = "77b81655-b619-4723-b17e-ea58c034884b";$ui.callback=""; $ui.lrinterfacecontainer ="interfacecontainerdiv"; LoginRadius_SocialLogin.init(options);  }); 
-    </script>-->
+     <link type="text/css" rel="stylesheet" href="../stylesheets/docs2.css">
+     <link type="text/css" rel="stylesheet" href="../stylesheets/mystyles.css">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif|Lobster+Two' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="../stylesheets/zocial.css">
   </head>
   <body>
-    <div class="container-fluid"> 
+    
 
-      <!-- Top bar --> 
-      <div class="row-fluid top-container">  
-	<div class="row-fluid">
-	  <img class="logo" src="../images/nuslogo.jpg">
-	</div>
-
-	<div class="span4 offset8 signin-align">
-	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
-	</div>
-      </div>
-      <!-- End of top bar -->
-
-    <!-- Main navigation -->
-    <div class = "navbar">
-      <div class = "navbar-inner">
-        <ul class = "nav">
-          <li class="divider-vertical"></li>
-          <li> <a href="/index"><i class="icon-home"></i>Home</a> </li>
-          <li class="divider-vertical"></li>
-          <li class="dropdown"><a href="/profile"><i class="icon-user"></i>Profile</a></li>
-          <li class="divider-vertical"></li>
-          <li> <a href="/search"><i class="icon-search"></i>Search</a> </li>
-          <li class="divider-vertical"></li>
-          <li class="dropdown"> 
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><i class="icon-list-alt"></i>View<b class="caret"></b></a>
+      <!-- Main navigation -->
+      <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href = "/index">NUS CCA Finder</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class = "active"> <a  href="/index">Home</a> </li>
+          <li class = "dropdown active"><a href="/profile">Profile</a></li>
+          <li class = "active"> <a href="/search">Friendster up!</a> </li>
+         
+          <li class=" active dropdown"> 
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="/view">Overview</a></li>
               <li class="divider"></li>
@@ -46,11 +50,26 @@
               <li><a href="/viewbycategory">View by category</a></li>
               <li class="divider"></li>
               <li><a href="/viewbysearch">Search</a></li>
-            </ul>  
-          </li>
-          <li class="divider-vertical"></li>
-        </div> 
-    </div> <!--will be inherited by all the others--><!--attention: div is not closed here for profile page-->
+        </ul>
+      </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+    <div class="container-fluid"> 
+
+      <!-- Top bar --> 
+      <div class="row-fluid top-container">  
+
+	<div class="span4 offset8 signin-align">
+	  <span> {{ user_mail }} <a href="{{ logout }}">logout</a></span>
+	</div>
+      </div>
+    </div>
+      <!-- End of top bar -->
+
+    <!-- Main navigation -->
+    <!--will be inherited by all the others--><!--attention: div is not closed here for profile page-->
 
     <!--children can change the following part-->
     {% block content %} {% endblock%} 
