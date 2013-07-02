@@ -2,66 +2,339 @@ import urllib
 import webapp2
 import jinja2
 import os
+import datetime
+import logging
 
 
 from google.appengine.ext import db
+from google.appengine.api import images
 from google.appengine.api import users
-from datetime import datetime
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
 
 
-class CCA_item(db.Model):
+# main page event handler
+class MainPage(webapp2.RequestHandler):
+  """ Front page for those logged in """
+  def get(self):
+    user = users.get_current_user()
+    if user:  # signed in already
+      template_values = {
+        'home': self.request.host_url,
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        } 
+      template = jinja_environment.get_template('frontuser.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect('/')
+
+# Datastore definitions
+class Persons(db.Model):
+  """Models a person identified by email"""
+  email = db.StringProperty()
+  name = db.StringProperty()
+  gender = db.BooleanProperty()
+  year = db.IntegerProperty()
+  faculty = db.StringProperty()
+  residence = db.StringProperty()
+  interest = db.StringListProperty()
+  
+class CCA(db.Model):
   """Models a CCA by name location and description"""
   name = db.StringProperty()
   venue = db.StringProperty()
   category = db.StringProperty()
   description = db.StringProperty(multiline=True)
   videolink = db.StringProperty()
-  joined_number = db.IntegerProperty() #show how many people have joined, a standard for sorting
+  joined = db.StringProperty()
+  date = db.DateTimeProperty(auto_now_add=True)
 
+class Picture(db.Model):
+  content = db.BlobProperty()
 
-class CCA_comments(db.Model):
-  """a comment for CCAitem"""
-  author = db.StringProperty() #annonymous if the author chooses to do this
-  date = db.StringProperty()
-  comment = db.StringProperty(multiline=True) #content of the comment
-
-
-class miniCCA(db.Model):
-  """mini cca: less space to show a person is interested or joining a cca"""
-  name_venue = db.StringProperty() #this is the identifier
-  join = db.BooleanProperty() #true for join; false for interest
-
-#view cca: login not required
-class ViewCCA(webapp2.RequestHandler):
+#need to be more sure about this one
+class ImageDisplay(webapp2.RequestHandler):
   def get(self):
-    cca_name = self.request.get('name')
-    cca_venue = self.request.get('venue')
-    if cca_name == None or cca_name == "":
-      self.redirect('/errormsg'+'?error=Unexpected Error With Get&continue_url=index')
-    ccas = db.GqlQuery("SELECT * FROM CCA_item WHERE name=:1 AND venue=:2", cca_name, cca_venue)
-    if ccas:
-      if True:
+    parent_key = db.Key.from_path('Persons', users.get_current_user().email())
+    photos = db.GqlQuery("SELECT * FROM Picture WHERE ANCESTOR IS :1", parent_key)
+
+    if photos.count()!=0:
+      photo=photos.get()
+      self.response.headers['Content-Type'] = 'image/png'
+      self.response.out.write(photo.content)
+    else:
+      self.redirect('/error'+'?error=No Image&continue_url=editprofile')
+
+#event handlers
+#login event
+class Login(webapp2.RequestHandler):
+  def get(self):
+    user = users.get_current_user()
+    if user:  # signed in already
+      template_values = {
+        'home': self.request.host_url,
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('frontuser.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(users.create_login_url( federated_identity='https://openid.nus.edu.sg/'))
+
+#personal profile
+class Profile(webapp2.RequestHandler):
+  """ Form for getting and displaying wishlist items. """
+  def get(self):
+    user = users.get_current_user()
+    if user:  # signed in already
+      # Retrieve person
+      parent_key = db.Key.from_path('Persons', users.get_current_user().email())
+      person = db.get(parent_key)
+      if person == None:
+        #the user has not complete the profile
         template_values = {
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url),
-          'cca': ccas.get(),
-          }
-        template = jinja_environment.get_template('/viewcca.html')
+          'complete': False,
+          'person': person,
+          'CCAs1': "",
+          'CCAs2': "",
+        }
+        template = jinja_environment.get_template('profile.html')
         self.response.out.write(template.render(template_values))
       else:
-        self.redirect('/errormsg'+'?error=UnexpectedErrorInDB&continue_url=index')
+        #if the user have completed the profile
+        query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined='True' ORDER BY date DESC", parent_key)
+        query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined='False' ORDER BY date DESC", parent_key)
+        template_values = {
+          'user_mail': users.get_current_user().email(),
+          'logout': users.create_logout_url(self.request.host_url),
+          'complete': True,
+          'person': person,
+          'CCAs1': query1,
+          'CCAs2': query2,
+        }
+        template = jinja_environment.get_template('profile.html')
+        self.response.out.write(template.render(template_values))
     else:
-      self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
+      self.redirect(self.request.host_url)
 
-#add cca: admin required
+#edit personal profile
+class EditProfile(webapp2.RequestHandler):
+  """display edit profile page and post the inputs to db"""
+  def get(self): #get mothed to display the page
+    user = users.get_current_user()
+    if user: #there is no way to call this directly???
+      self.redirect('/profile#editprofile')
+    else:
+      self.redirect(self.request.host_url)
+
+  def post(self):
+    """to get the input and store them in db"""
+    parent_key = db.Key.from_path('Persons', users.get_current_user().email())
+    person = db.get(parent_key)
+    if person == None: #store this person in the db if it is not in db yet
+      newProfile = Persons(key_name=users.get_current_user().email())
+      newProfile.email = users.get_current_user().email()
+      newProfile.put()
+    
+    newProfile = Persons(key_name=users.get_current_user().email())
+    if self.request.get('person_name')!='':
+      newProfile.name=self.request.get('person_name')
+    #check an img
+    if self.request.get('face_img')!='':
+      try:
+        img = images.resize(self.request.get('face_img'), 200, 200)
+        picture = Picture(parent=parent_key)
+        picture.content = db.Blob(img)
+        #delete prev uploads
+        photo = db.GqlQuery("SELECT * FROM Picture WHERE ANCESTOR IS :1", parent_key)
+        for item in photo:
+          item.delete()
+        #save new one
+        picture.put()
+      except TypeError: #does not redirect now
+        self.redirect("/errormsg?error=Not a supported type&continue_url=profile")
+      except:
+        self.redirect("/errormsg?error=Unexpected error&continue_url=profile")
+    else: #cannot detect no-file situation
+      err_exist = True
+      msg = "?error=No File Chosen&continue_url=profile"
+    #determine gender
+    if self.request.get('person_gender') == "Male":
+      newProfile.gender = True
+    else:
+      newProfile.gender = False 
+
+    newProfile.year = int(self.request.get('person_year'))
+    newProfile.faculty = self.request.get('person_faculty') 
+    newProfile.residence = self.request.get('person_residence')
+    interesttags = self.request.get('person_interest')
+    newProfile.interest = interesttags.split()
+    err_exist = False
+    if len(newProfile.interest) > 6:
+      err_exist = True
+      msg = "?error=Too Many Interests&continue_url=profile"
+    if newProfile.name == "None" or newProfile.name == "default" or newProfile.name == "":
+      err_exist = True
+      msg = "?error=Name Is Illegal&continue_url=profile"
+
+    if err_exist:
+      self.redirect('/errormsg'+msg)
+    else:
+      newProfile.put()
+      self.redirect('/profile')
+
+#display search page to user for searching
+class Search(webapp2.RequestHandler):
+  """ Display search page """
+  def get(self):
+    user = users.get_current_user()
+    if user:  # signed in already
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        } 
+      template = jinja_environment.get_template('search.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+#search db and for display html
+class Display(webapp2.RequestHandler):
+  """ Displays search result """
+  def post(self):
+
+    target = self.request.get('friend_email').rstrip()
+    # Retrieve person
+    parent_key = db.Key.from_path('Persons', target)
+
+    query1 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined = 'True' ORDER BY date DESC", parent_key)
+    query2 = db.GqlQuery("SELECT * FROM CCA WHERE ANCESTOR IS :1 AND joined = 'False' ORDER BY date DESC", parent_key)
+
+    template_values = {
+      'user_mail': users.get_current_user().email(),
+      'target_mail': target,
+      'logout': users.create_logout_url(self.request.host_url),
+      'CCAs1': query1,
+      'CCAs2': query2,
+      } 
+    template = jinja_environment.get_template('display.html')
+    self.response.out.write(template.render(template_values))
+
+class ViewGuide(webapp2.RequestHandler):
+  """enable user see the view page"""
+  def get(self):
+    #things to put in
+    user = users.get_current_user()
+    if user:  # signed in already
+
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        } 
+
+      template = jinja_environment.get_template('viewguide.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewByHall(webapp2.RequestHandler):
+  """request handler for view by hall page"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('viewbyhalls.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewHalls(webapp2.RequestHandler):
+  """view temasek"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      hall = self.request.get('name')
+      if hall=="" or hall==None:
+        self.redirect('/errormsg'+'?Illegal Operation&continue_url=index')
+      else:
+        sports = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:1 AND category='sports' ORDER BY date DESC", name)
+        music = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND venue=:1 AND category='music' ORDER BY date DESC", name)
+        template_values = {
+          'user_mail': users.get_current_user().email(),
+          'logout': users.create_logout_url(self.request.host_url),
+          }
+        template = jinja_environment.get_template(hall+'.html')
+        self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewByCategory(webapp2.RequestHandler):
+  """request handler for view by category search"""
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        }
+      template = jinja_environment.get_template('viewbycategory.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+class ViewBySearch(webapp2.RequestHandler):
+  def get(self):
+    user = users.get_current_user()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url)
+        }
+      template = jinja_environment.get_template('viewbysearch.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
+
+
+class ViewCCA(webapp2.RequestHandler):
+  def get(self):
+    user = users.get_current_user().email()
+    if user:
+      cca_name = self.request.get('name')
+      cca_venue = self.request.get('venue')
+      if cca_name == None or cca_name == "":
+        self.redirect('/errormsg'+'?error=Unexpected Error With Get&continue_url=index')
+
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
+      if ccas:
+        if  True:
+          template_values = {
+            'user_mail': users.get_current_user().email(),
+            'logout': users.create_logout_url(self.request.host_url),
+            'cca': ccas.get(),
+          }
+          template = jinja_environment.get_template('viewcca.html')
+          self.response.out.write(template.render(template_values))
+        else:
+          self.redirect('/errormsg'+'?error=UnexpectedErrorInDB&continue_url=index')
+      else:
+        self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
+    else:
+      self.redirect(self.request.host_url)
+
 class AddCCA(webapp2.RequestHandler):
   def get(self):
     user = users.get_current_user().email()
     if user:
-      if user=='a0105750@nus.edu.sg' or user=='test@example.com':
+      #tesing block go here
+      if True:
         template_values = {
           'user_mail': users.get_current_user().email(),
           'logout': users.create_logout_url(self.request.host_url)
@@ -69,16 +342,16 @@ class AddCCA(webapp2.RequestHandler):
         template = jinja_environment.get_template('newcca.html')
         self.response.out.write(template.render(template_values))
       else:
-        self.redirect('/errormsg'+'?error=Not Authorized&continue_url=index')
+        self.redirect('/errormsg'+'?error=NotAuthorized&continue_url=index')
     else:
-      self.redirect('/errormsg'+'?error=Login First Please&continue_url=index')
+      self.redirect(self.request.host_url)
 
   def post(self):
     #add a cca; checking is not done yet
     name = self.request.get('cca_name')
     venue = self.request.get('cca_venue')
-    if name!='' and venue!='':
-      cca = CCA_item(key_name=(name+venue))
+    if name!='':
+      cca = CCA(key_name=(name+venue))
       cca.name = name
       cca.venue = venue
       cca.category = self.request.get('cca_category')
@@ -87,37 +360,21 @@ class AddCCA(webapp2.RequestHandler):
       cca.joined = 'root'
       #check whether a cca with the same name exist or not, to be implemented
       cca.put()
-      self.redirect('/CCA/add')
+      self.redirect('/index')
     else:
-      self.redirect('/errormsg'+'?error=Empty Input&continue_url=CCA/add')
+      self.redirect('/errormsg'+'?error=EmptyInput&continue_url=addcca')
 
-#add comments: login not required for now
-class AddComments(webapp2.RequestHandler):
-  def post(self):
-    user = users.get_current_user().email()
-    if user:
-      author_email = user
-      person_key = db.Key.from_path('Persons', author_email)
-      person = db.get(person_key)
-      comment = CCA_comments()
-      comment.author = person.name
-      comment.content = self.request.get('content')
-      comment.date = str(datetime.now())
-    else:
-      author_email = ''
-
-#edit cca: admin required
 class EditCCA(webapp2.RequestHandler):
   """edit profile:only admins can can see"""
   def get(self):
     user = users.get_current_user().email()
     if user:
-      if user=='a0105750@nus.edu.sg' or user=='test@example.com':
+      if True: #if admin, to be implemented
         cca_name = self.request.get('name')
         cca_venue = self.request.get('venue')
-        ccas = db.GqlQuery("SELECT * FROM CCA_item WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
+        ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
         if ccas:
-          if ccas.count()==1:
+          if True: #to check no of results, to be implemmented
             template_values = {
               'user_mail': users.get_current_user().email(),
               'logout': users.create_logout_url(self.request.host_url),
@@ -125,18 +382,15 @@ class EditCCA(webapp2.RequestHandler):
             }
             template = jinja_environment.get_template('editcca.html')
             self.response.out.write(template.render(template_values))
-          else:
-            self.redirect('/errormsg'+'?error=Server Erorr&continue_url=index')
         else:
-          self.redirect('/errormsg'+'?error=Item Does Not Exist&continue_url=index')
+          self.redirect('/errormsg'+'?error=ItemDoesNotExist&continue_url=index')
     else:
       self.redirect(self.request.host_url)
 
   def post(self):
     name = self.request.get('cca_name')
-    venue = self.request.get('cca_venue')
-    if name!='' and venue!='':
-      cca = CCA_item(key_name=name)
+    if name!='':
+      cca = CCA(key_name=name)
       cca.name = name
       cca.venue = self.request.get('cca_venue')
       cca.category = self.request.get('cca_category')
@@ -146,23 +400,23 @@ class EditCCA(webapp2.RequestHandler):
       cca.put()
       self.redirect('/index')
     else:
-      self.redirect('/errormsg'+'?error=EmptyInput&continue_url=index')
+      self.redirect('/errormsg'+'?error=EmptyInput&continue_url=addcca')
 
-#show interst || join a cca: login required 
 class ShowInterest(webapp2.RequestHandler):
-  def post(self):
+  def get(self):
     user = users.get_current_user().email()
     if user:
       cca_name = self.request.get('name')
       cca_venue = self.request.get('venue')
       interested = self.request.get('join')
-      ccas = db.GqlQuery("SELECT * FROM CCA_item WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
+      ccas = db.GqlQuery("SELECT * FROM CCA WHERE joined='root' AND name=:1 AND venue=:2", cca_name, cca_venue)
       if ccas:
         cca=ccas.get()
         parent_key = db.Key.from_path('Persons', users.get_current_user().email())
-        target = miniCCA(parent=parent_key)
+        person = db.get(parent_key)
+        target = CCA(parent=parent_key)
         if interested=='true':
-          target.joined='interested'
+          target.joined='interest'
         elif interested=='false':
           target.joined='joined'
         else:
@@ -176,9 +430,35 @@ class ShowInterest(webapp2.RequestHandler):
     else:
       self.redirect(self.request.host_url)
 
+class ErrorDealing(webapp2.RequestHandler):
+  def get(self):
+    user = users.get_current_user().email()
+    if user:
+      template_values = {
+        'user_mail': users.get_current_user().email(),
+        'logout': users.create_logout_url(self.request.host_url),
+        'error': self.request.get('error'),
+        'continue_url': self.request.get('continue_url'),
+        }
+      template = jinja_environment.get_template('errormsg.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      self.redirect(self.request.host_url)
 
-app = webapp2.WSGIApplication([('/CCA/view', ViewCCA),
-                               ('/CCA/add', AddCCA),
-                               ('/CCA/edit', EditCCA),
-                               ('/interest', ShowInterest)],
+app = webapp2.WSGIApplication([('/index', MainPage),
+                               ('/profile', Profile),
+                               ('/editprofile', EditProfile),
+                               ('/Login',Login),
+                               ('/search', Search),
+                               ('/display', Display),
+                               ('/view', ViewGuide),
+                               ('/viewbyhall',ViewByHall),
+                               ('/viewbycategory',ViewByCategory),
+                               ('/viewbysearch',ViewBySearch),
+                               ('/viewhalls',ViewHalls),
+                               ('/addcca',AddCCA),
+                               ('/viewcca',ViewCCA),
+                               ('/editcca',EditCCA),
+                               ('/img', ImageDisplay),
+                               ('/errormsg',ErrorDealing)],
                               debug=True)

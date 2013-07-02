@@ -6,20 +6,16 @@ threadsafe: true
 
 handlers:
 
-# favicon
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
 
-# self-defined css
 - url: /stylesheets
   static_dir: stylesheets
 
-# images
 - url: /images
   static_dir: images
 
-# self-defined scripts-js
 - url: /scripts
   static_dir: scripts
 
@@ -35,30 +31,10 @@ handlers:
 - url: /_ah/login_required
   script: login.app
 
-# pages require login: general pages
-- url: /(index|profile|editprofile|search|display|img)
-  script: general.app
-  login: required
-
-# pages require admin: edit/add cca
-- url: /CCA/(edit|add)
-  script: cca.app
-  login: required
-
-- url: /interst
-  script: cca.app
-  login: required
-
-# pages does not require login
-- url: /CCA/(view|comment)
-  script: cca.app
-
-- url: /view/(guide|all-halls|hall|all-categories|category|search)
-  script: view.app
-
-# pages not found
+# All other pages require login
 - url: /.*
-  script: not-found.app
+  script: cca.app
+  login: required
 
 libraries:
 - name: jinja2
