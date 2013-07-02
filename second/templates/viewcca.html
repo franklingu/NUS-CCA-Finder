@@ -3,38 +3,51 @@
 
 {% block content %}
 	<div class="row">
-	  <div class="span4 offset1">
-      <div class="row">
-        Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ cca.name }}
-      </div>
-      <div class="row">
-        Venue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ cca.venue }}
-      </div>
-      <div class="row">
-        Category &nbsp;&nbsp;&nbsp; {{ cca.category }}
-      </div>
-      <div class="row">
-        Description{{ cca.description }}
-      </div>
-      <div class="row">
+	  <div class="span4">
+	  	<div>
+	  		<dl class="dl-horizontal">
+	  		  <dt>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+	  		  <dd>{{ cca.name }}</dd>
+	  		  <dt>Venue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+	  		  <dd>{{ cca.venue }}</dd>
+	  		  <dt>Category &nbsp;&nbsp;&nbsp;</dt>
+	  		  {{ cca.category }}</dd>
+	  		  <dt>Description</dt>
+	  		  <dd>{{ cca.description }}</dt>
+	  		</dl>
+	  	</div>
+
+          <div class="span3 pull-right">
+        <div class="accordion" id="recomd-cca">
+          {% for each in recommands %}
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle btn" data-toggle="collapse" data-parent="#recomd-cca" href="#cca1"> {{each.name}} </a>
+              </div>
+              <div class="accordion-body collapse" id="cca1">
+                <div class="accordion-inner">
+                  <p> {{each.decription}} </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
         <a href="/interestcca" class="btn btn-primary">Interested</a>
         <a href="/joincca" class="btn btn-primmary">Joined</a>
-      </div>
+          </div>
+
+        <div class="row">
+          {% if admin %}You can <a href="/editcca">edit it</a>, or you can <a href="/addcca">add CCAs</a> {% endif %}
+        </div>
+      </div>     <!--left side bar-->
+
+	  <div class="span6 offset2">
+	  	<iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" 
+	  	   src={{ cca.videolink }} frameborder="0" allowFullScreen></iframe>
 	  </div>
+	</div> <!--end of "row" class-->     
+    </div> <!--end of container-fluid-->
 
-    <div class="span6 offset1">
-      <div class="video">
-        {% if cca.videolink %}
-        <iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="//www.youtube.com/embed/-XQ-7FquseY" frameborder="0" allowFullScreen></iframe>
-        {% endif %}
-        {% if cca.videolink!=None %}
-           <span>No video found</span>
-        {% endif %}
-      </div>
-    </div> 
-
-    <div class="row offset1">
-      {% if admin %}You can <a href="/CCA/edit">edit it</a>, or you can <a href="/addcca">add CCAs</a> {% endif %}
-    </div>
-  </div> 
+  </div> <!--close containder fluid in base1-->
 {% endblock %}
