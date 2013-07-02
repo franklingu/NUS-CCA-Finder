@@ -2,23 +2,32 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-  <div class="row">
-  	<div class="span4 offset4">
-  	  <h2 class="success">Welcome to editing page</h2>
-  	  Info of a new CCA
-  	</div>
+<div class="row">
+  <div class="span8 offset1">
+    <h2 class="success">Welcome to editing page</h2>
+    <div class="form-align-toright20 span5">
+    	<form action="/CCA/add" method="post" enctype="multipart/form-data">
+        <div class="row">
+    	    CCA Name: <input type="text" placeholder="CCA Name" name="cca_name">
+        </div>
+        <div class="row">
+    	    CCA Venue: <input type="text" placeholder="CCA Venue" name="cca_venue">
+        </div>
+        <div class="row">
+    	    CCA Category: <input type="text" placeholder="CCA Category" name="cca_category">
+        </div>
+        <div class="row">
+    	    CCA Descrption: <textarea name="cca_desc"></textarea>
+        </div>
+        <div class="row">
+    	    CCA Youtube Link: <input type="text" placeholder="Youtube link, leave blank if none" name="youtubelink">
+        </div>
+        <div class="pull-right">
+      	  <input type="submit" value="Add" class="btn btn-success">
+      	  <a href="/index" class="btn btn-danger">Cancel</a>
+        </div>
+    	</form>
+    </div>
   </div>
-  <div class="span9 offset1">
-  	<form action="#" method="post" enctype="multipart/form-data">
-  	  CCA Name: <input type="text" placeholder="CCA Name" name="cca_name">
-  	  CCA Venue: <input type="text" placeholder="CCA Venue" name="cca_venue">
-  	  CCA Category: <input type="text" placeholder="CCA Category" name="cca_category">
-  	  CCA Descrption: <textarea name="cca_desc"></textarea>
-  	  CCA Youtube Link: <input type="text" placeholder="Youtube link, leave blank if none" name="youtubelink">
-  	  <input type="submit" value="Add" class="btn">
-  	  <a href="/index" class="btn btn-primary">Cancel</a>
-  	</form>
-  </div>
-
-  </div> <!--close containder fluid in base1-->
+</div>
 {% endblock %}
