@@ -31,13 +31,6 @@ indexes:
   - name: date
     direction: desc
 
-- kind: CCA_item
-  ancestor: yes
-  properties:
-  - name: joined
-  - name: date
-    direction: desc
-
 - kind: Items
   properties:
   - name: email
@@ -47,12 +40,5 @@ indexes:
 - kind: Items
   ancestor: yes
   properties:
-  - name: date
-    direction: desc
-
-- kind: miniCCA
-  ancestor: yes
-  properties:
-  - name: join
   - name: date
     direction: desc

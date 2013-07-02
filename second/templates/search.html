@@ -2,14 +2,11 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-<div class="row-fluid">
-	<div class="span8 offset1">
-	    <form  action="/display" method="post">
-	        <div class="row">  
-	            <input type="text" class="input-medium search-query" placeholder="Enter NUS email of your friend">
-	            <input type="submit" class="btn btn-primary" name="submit_email" />
-	        </div>
-	    </form>	
-	</div>
-</div>
+  <form  action="/display" method="post">  
+	  <fieldset>
+		  <p>Enter NUS email of your friend:</p>
+      <input type="text" name="friend_email" /><br />
+      <input type="submit" name="submit_email" />
+	  </fieldset>
+  </form>	
 {% endblock %}	

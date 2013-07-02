@@ -1,25 +1,20 @@
 body {
-	background: #C9F2FC;
-	padding-top: 70px;
+	/*background: #158D90;*/
 }
+
 header {
 	font-family: 'Droid Serif', Georgia, serif;
-	font-size:  1.5em;
+	font-size:  1.2em;
 	padding: 0 10%;
 }
 
 header h1 {
 	font-family: "Lobster two",georgia, serif;
-	color: #ffffff;
-	font-size: 30px;
-}
-
-#front-word {
-	text-align: center; margin-right: 9%; margin-left: 3%;
+	color: #E2E6AC;
 }
 
 header p {
-	color: #ffffff;
+	margin-bottom: 25px;
 }
 
 .carousel {
@@ -86,12 +81,12 @@ border: 0;
 -ms-interpolation-mode: bicubic;
 }
 .navbar-inner {
-	background-color: #274080;
+	background-color: #114B53;
 	background-image: -moz-linear-gradient(top, #0E3D43, #082327) !important;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0E3D43), to(#082327)) !important;
 	background-image: -webkit-linear-gradient(top, #0E3D43, #082327) !important;
 	background-image: -o-linear-gradient(top, #0E3D43, #E2E6AC) !important;
-	background-image: linear-gradient(to bottom, #0E3D43, #274080) !important;
+	background-image: linear-gradient(to bottom, #0E3D43, #114B53) !important;
 }
 
 .navbar .brand {
