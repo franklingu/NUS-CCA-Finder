@@ -1,4 +1,4 @@
-application: nusccagu
+application: nus-cca-finder
 version: 2
 runtime: python27
 api_version: 1
