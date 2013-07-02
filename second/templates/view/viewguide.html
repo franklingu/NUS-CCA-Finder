@@ -1,0 +1,47 @@
+<!-- view page -->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="span8 offset1">
+    <!--tabbable content-->
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+          <li class="active"><a href="#lA" data-toggle="tab">View CCAs by category</a></li>
+          <li><a href="#lB" data-toggle="tab">View CCAs by location</a></li>
+          <li><a href="#lC" data-toggle="tab">View CCAs by searching</a></li>
+      </ul>
+      <div class="tab-content">
+          <div class="tab-pane active" id="lA">
+              <ul>
+                  <li>Sports</li>
+                  <li>Dance and Sing</li>
+                  <li>Tech</li>
+                  <li>Arts</li>
+                  <li>Others</li>
+                  <br /><br /><br /> 
+              </ul>
+          </div>
+          <div class="tab-pane" id="lB">
+              <ul>
+                  <li>Eusoff</li>
+                  <li>King Edward</li>
+                  <li>Kent Ridge</li>
+                  <li>Raffles</li>
+                  <li>Sheares</li>
+                  <li>Temasek</li>
+                  <li>PGP</li>
+                  <li>RVR</li>
+                  <li>KFH</li>
+                  <li>UTown</li>
+                  <br /><br /><br /> 
+              </ul>
+          </div>
+          <div class="tab-pane" id="lC">
+            <form class="form-search">
+              <input type="text" class="input-medium search-query">
+              <input type="submit" class="btn" value="Submit">
+            </form>
+          </div>
+    </div>
+</div>
+{% endblock %}

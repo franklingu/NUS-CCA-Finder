@@ -1,0 +1,66 @@
+<!--view by categories-->
+{% extends 'base1.html' %}
+
+{% block content %}
+  <div class="tabbable">
+  	<div class="row-fluid" style=" margin-top: 3%; margin-bottom:1%;">
+			<div class="span3" id="bigd" style = "text-align: center;" >
+			<img src="/images/sport.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Sports</h4>
+			<!--  <span class="label label-success">Available In USA</span> -->
+			<p>Enjoy games and sports in abundance at NUS!</p>
+			<a href="#sports" class="btn btn-small btn-bigdata" data-toggle="tab">Explore Sports</a>
+		</div>
+		<div class="span3" id="mob" style = "text-align: center;">
+		<img src="/images/music.jpg" height = "45%" width = "45%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Music</h4>
+			<!-- <span class="label label-important">Coming Soon</span> -->
+			<p> Music can change the world and we sure do have a lot of it in NUS! </p>
+			<a href="#music" class="btn btn-small btn-mobility" data-toggle="tab">Explore Music</a>
+		</div>
+		<div class="span3" id="uix" style = "text-align: center;" >
+			<img src="/images/dance.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Dance</h4>
+			<!-- <span class="label label-important">Coming Soon</span> -->
+			<p> Dance till you die! But you surely got to give it a shot while you're in NUS!</p>
+			<a href="#dance" class="btn btn-small btn-ui" data-toggle="tab">Explore Dance</a>
+		</div>
+		<div class="span3" id="analy" style = "text-align: center;" >
+			<img src="/images/tech.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Tech</h4>
+			<!-- <span class="label label-important">Coming Soon</span> -->
+			<p>Technology is magic! That magic is right here in NUS!</p>
+			<a href="#tech" class="btn btn-small btn-analytics" data-toggle="tab">Explore Tech</a>
+		</div>				
+	</div>
+
+	<div class="row-fluid" style=" margin-top: 3%; margin-bottom:1%; float: none; margin:0 auto;">		
+		<div class="span3 offset2" id="uix" style = "text-align: center;" >
+			<img src="/images/arts.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Arts</h4>
+			<!-- <span class="label label-important">Coming Soon</span> -->
+			<p> The artistic side of NUS - where you might discover the Picasso in you!</p>
+			<a href="#arts" class="btn btn-small btn-ui" data-toggle="tab">Explore Arts</a>
+		</div>
+		<div class="span3" id="analy" style = "text-align: center;" >
+			<img src="/images/tech.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Drama</h4>
+			<!-- <span class="label label-important">Coming Soon</span> -->
+			<p> The world's a theatre and so are some awesome drama CCA's at NUS!</p>
+			<a href="#acting" class="btn btn-small btn-analytics" data-toggle="tab">Explore Drama</a>
+		</div>	
+		<div class="span3" id="bigd" style = "text-align: center;" >
+			<img src="/images/sport.jpg" height = "50%" width = "50%" style="margin:auto; display:block; padding: 15px;">
+			<h4>Others</h4>
+			<!--  <span class="label label-success">Available In USA</span> -->
+			<p>Your CCA doesn't fall in any of the other categories? You have &ldquo;Others&rdquo;</p>
+			<a href="#others" class="btn btn-small btn-bigdata" data-toggle="tab">Explore Others</a>
+		</div>			
+	</div>
+
+  	<div class="tab-content" style = "margin-top: 2%;">
+  	</div>
+  </div>
+
+  </div> <!--close containder fluid in base1-->
+{% endblock %}
