@@ -1,18 +1,18 @@
-<!--view by 6 halls:base2 extends base1 and acting as the base for 7 halls-->
+<!--view by 7 categories:base3 extends base1 and acting as the base for the different categories-->
 
 {% extends 'base1.html' %}
 {% block content %}
-  {% block hall_desc %}
+  {% block categ_desc %}
   {% endblock %}
   <div class="tabbable tabs-left" style = "padding-left: 30px;">
   	<ul class="nav nav-tabs">
-  	  <li class="active"><a href="#sports" data-toggle="tab">Sports</a></li>
-  	  <li><a href="#music" data-toggle="tab">Music</a></li>
-  	  <li><a href="#dance" data-toggle="tab">Dance</a></li>
-  	  <li><a href="#tech" data-toggle="tab">Tech</a></li>
-  	  <li><a href="#acting" data-toggle="tab">Acting</a></li>
-  	  <li><a href="#arts" data-toggle="tab">Arts</a></li>
-  	  <li><a href="#others" data-toggle="tab">Others</a></li>
+  	  <li class="active"><a href="#sports" data-toggle="tab">NUS-wide</a></li>
+  	  <li><a href="#kr" data-toggle="tab">Kent Ridge</a></li>
+  	  <li><a href="#ke" data-toggle="tab">King Edward VII</a></li>
+  	  <li><a href="#temasek" data-toggle="tab"> Temasek</a></li>
+  	  <li><a href="#raffles" data-toggle="tab">Raffles</a></li>
+  	  <li><a href="#sheares" data-toggle="tab">Sheares</a></li>
+  	  <li><a href="#eusoff" data-toggle="tab">Eusoff</a></li>
   	</ul>
   	<div class="tab-content">
   	  <div class="tab-pane span8 offset2 active" id="sports">
@@ -38,7 +38,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in music %}
+  	  	  	 {% for each in kr %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
@@ -56,7 +56,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in dance %}
+  	  	  	 {% for each in ke %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
@@ -74,7 +74,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in tech %}
+  	  	  	 {% for each in temasek %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
@@ -92,7 +92,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in acting %}
+  	  	  	 {% for each in raffles %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
@@ -110,7 +110,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in arts %}
+  	  	  	 {% for each in sheares %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
@@ -128,7 +128,7 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in others %}
+  	  	  	 {% for each in eusoff %}
 			    <tr>
 			  	  <td>
 		          {{ each.name }}
