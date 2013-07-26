@@ -1,0 +1,69 @@
+<!-- Front page: before log in -->
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>NUS CCA Finder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+  <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+  <link type="text/css" rel="stylesheet" href="../stylesheets/mystyles.css">
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif|Lobster+Two' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="../stylesheets/zocial.css">
+</head>
+<body>
+    <!-- Main navigation -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href = "/">NUS CCA Finder</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li class="active"><a href="/">Home</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div> <!--end of nav bar-->
+  <div class="container-fluid"> 
+    <div class="row-fluid">
+    	<div class="top-pad-one">
+    	  <div class="span4 offset1" id="CCA-pic">
+    		  Loading
+        </div>
+        <div class="span6 container">
+	        <div id="front-word">
+            <h1>Hello NUS!</h1>
+            <p>Want to find out more about CCA&#39;s around you?<br>
+              Eager to know what CCA&#39;s your friends are taking?<br>
+              CCA-Finder is the one-stop shop for all things <b>C-C-A!!</b></p>
+            <a href="/_ah/login_required?continue_url=/index&openid_url=NUS" class="zocial openid"> &nbsp;&nbsp;Sign in with NUS open id &nbsp;&nbsp;</a><br /><br />
+            <a href="/_ah/login_required?continue_url=/index&openid_url=Google" class="zocial google">Sign in using Google Account</a><br /><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/scripts/bootstrap.js"></script>
+  <script type="text/javascript">
+    function updateMainPic(){
+      $.ajax({
+        url: "/main-pic",
+        cache: false,
+        success: function(html){
+          $("#CCA-pic").html(html);
+        }
+      });
+    }
+    updateMainPic();
+  </script>
+</body>
+</html>

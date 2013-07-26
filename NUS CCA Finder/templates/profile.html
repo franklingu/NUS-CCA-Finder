@@ -1,0 +1,203 @@
+<!-- personal profile  extends from base1 -->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row-fluid">
+	<div class="span12">
+		<div class="span8 offset1">
+			<div class="alert">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{% if complete == False %} 
+				<p class="text-success">Your profile is highly incomplete. Why don't you 
+					<strong><a href='#editprofile' data-toggle="modal">edit it</a></strong> now ?</p> 
+				{% endif %}
+			    {% if complete == True %} 
+			    <p class="text-success">Want to update your profile? Update it 
+			    	<strong><a href='#editprofile' data-toggle="modal">here</a></strong> !</p>
+			    {% endif %}
+			</div>
+
+            <div class="row">
+            	<p class="text-info size-18">Your personal profile: </p>
+            </div>
+			<div class="row text-area-margin">
+	            <div class="span3">
+				    <div id="user-pic-area">
+						{% if complete == True %}
+				        <attr title="only jpg/png/gif are supported">
+				        <img src="/img" class="img-rounded" style="width: 150px; height:150px;" />
+				        </attr>
+				        {% endif %}
+				        {% if complete == False %}
+				        <span class="text-warning">No Picture found!</span>
+				        {% endif %}
+				    </div>
+				</div>
+				<div class="span3 offset1">
+					<div class="row text-margin5">
+						<br />
+				    Name: {% if complete == True %}
+					        {{ person.name }}
+					      {% endif %}
+					      {% if complete == False %}
+					        Annonymous
+					      {% endif %}
+					</div>
+					<div class="row text-margin5">
+					Gender: {% if complete == True %}
+					          {% if person.gender == True %} Male {% endif %}
+					          {% if person.gender == False %} Female {% endif %}
+					        {% endif %}
+					          {% if complete == False %} Unknown
+					        {% endif %}
+					</div>
+					<div class="row text-margin5">
+					Year: {% if complete == True %}
+					        {{ person.year }}
+					      {% endif %}
+					      {% if complete == False %}
+					        Unknown
+					      {% endif %}
+					</div>
+					<div class="row text-margin5">
+					Faculty: {% if complete == True %}
+						        {{ person.faculty }}
+						     {% endif %}
+						     {% if complete == False %}
+						        Unknown
+						     {% endif %}
+                    </div>
+                    <div class="row text-margin5">
+				    Residence: {% if complete == True %}
+						          {{ person.residence }}
+						        {% endif %}
+						        {% if complete == False %}
+						          Unknown
+						        {% endif %}
+				    </div>
+	            </div>
+	        </div>
+
+	        <div class="row text-margin20-left">
+                Interests and CCAs:<br />
+                <div class="text-margin40-left">
+                	<div class="row">
+					    Interest:<br /> 
+					    {% if complete == True %}
+					      {% for interest in interests %}
+					         {{ interest }}
+					      {% endfor %}
+					    {% endif %}
+					    {% if complete == False %}
+					      Unknown
+					    {% endif %}
+					</div>
+					<div class="row">
+					    CCAs you are currently in:<br />
+					    {% if complete == True %}
+					      {% for CCA in CCAs1 %}
+					       {{ CCA.name }} {{ CCA.venue }}
+					      {% endfor %}
+					    {% endif %}
+					    {% if complete == False %}
+					      Unknown
+					    {% endif %}
+					</div>
+					<div class="row">
+					    CCAs you are interested:<br />
+					    {% if complete == True %}
+					      {% for CCA in CCAs2 %}
+					        {{ CCA.name }} {{CCA.venue}}
+					      {% endfor %}
+					    {% endif %}
+					    {% if complete == False %}
+					      Unknown
+					    {% endif %}
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div id="editprofile" class="modal hide fade" aria-labelledby="modallabel" aria-hidden="true">
+  <div class="modal-header">
+  	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+  	<h3 id="modallabel">Edit profile</h3>
+  </div>
+  <div class="modal-body">       
+      <form action='/editprofile' enctype="multipart/form-data" method='post'>
+	<fieldset>
+	  <div class = "row-fluid">
+      <div class="span6 offset1">
+        <blockquote>Your Info: 
+        </blockquote>
+        <br />
+      </div>
+	    <div class="span6 offset2">
+        <span class="info">Your picture: </span>
+	      <input type="file" name="face_img">
+	    </div>
+	    <div class="span6 offset2"> 
+        <div class="info">Name: </div>
+	      <input type="text" placeholder="Your name" value="{{ person.name }}" name="person_name">
+	    </div>
+	    <div class="span6 offset2"> 
+	      Gender:&nbsp;&nbsp; 
+	      <input type="radio" name="person_gender" value="Male" checked>Male &nbsp;&nbsp;&nbsp;
+	      <input type="radio" name="person_gender" value="Female" >Female
+	    </div>
+	    <div class="span6 offset2">
+	      Year: &nbsp;&nbsp;&nbsp;
+	      <select name="person_year">
+	      	<option value='1' {% if person.year==1 %} selected {% endif %}>Year 1</option>
+	      	<option value='2' {% if person.year==2 %} selected {% endif %}>Year 2</option>
+	      	<option value='3' {% if person.year==3 %} selected {% endif %}>Year 3</option>
+	      	<option value='4' {% if person.year==4 %} selected {% endif %}>Year 4</option>
+	      	<option value='5' {% if person.year==5 %} selected {% endif %}>Year 5</option>
+	      </select>
+	    </div>
+	    <div class="span6 offset2">
+	      Faculty: &nbsp;&nbsp;&nbsp;&nbsp;
+	      <select name="person_faculty">
+	      	<option value="Arts and Social Science" {% if person.faculty=="Arts and Social Science" %} selected {% endif %}>Arts and Social Sciences</option>
+	      	<option value="Business" {% if person.faculty=="Business" %} selected {% endif %}>Business</option>
+	      	<option value="Computing" {% if person.faculty=="Computing" %} selected {% endif %}>Computing</option>
+	      	<option value="Dentistry" {% if person.faculty=="Dentistry" %} selected {% endif %}>Dentistry</option>
+	      	<option value="Design and Environment" {% if person.faculty=="Design and Environment" %} selected {% endif %}>Design and Environment</option>
+	      	<option value="Engineering" {% if person.faculty=="Engineering" %} selected {% endif %}>Engineering</option>
+	      	<option value="Law" {% if person.faculty=="Law" %} selected {% endif %}>Law</option>
+	      	<option value="Medicine" {% if person.faculty=="Medicine" %} selected {% endif %}>Medicine</option>
+	      	<option value="Music" {% if person.faculty=="Music" %} selected {% endif %}>Music</option>
+	      	<option value="Public Health" {% if person.faculty=="Public Health" %} selected {% endif %}>Public Health</option>
+	      	<option value="Science" {% if person.faculty=="Science" %} selected {% endif %}>Science</option>
+	      	<option value="University Scholars Programme" {% if person.faculty=="University Scholars Programme" %} selected {% endif %}>University Scholars Programme</option>
+	      	<option value="Yale-NUS College" {% if person.faculty=="Yale-NUS College" %} selected {% endif %}>Yale-NUS College</option>
+	      </select>
+	    </div>
+	    <div class="span6 offset2">
+          Residence:
+          <select name="person_residence">
+          	<option value="Eusoff" {% if person.residence=="Eusoff" %} selected {% endif %}>Eusoff</option>
+          	<option value="King Edward" {% if person.residence=="King Edward" %} selected {% endif %}>King Edward</option>
+          	<option value="Kent Ridge" {% if person.residence=="Kent Ridge" %} selected {% endif %}>Kent Ridge</option>
+          	<option value="Raffles" {% if person.residence=="Raffles" %} selected {% endif %}>Raffles</option>
+          	<option value="Sheares" {% if person.residence=="Sheares" %} selected {% endif %}>Sheares</option>
+          	<option value="Temasek" {% if person.residence=="Temasek" %} selected {% endif %}>Temasek</option>
+          	<option value="UTown" {% if person.residence=="UTown" %} selected {% endif %}>UTown</option>
+          </select>
+	    </div>
+	    <div class="span6 offset2">
+	      Interest:<br />
+	      <textarea name="person_interest"></textarea>
+	    </div>
+	    <div class="span6 offset2 pull-right">
+	    	<input type="submit" class="btn btn-success">
+	    	<button type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	    </div>
+	  </div>
+	</fieldset>	
+      </form>
+  </div>
+</div>    
+{% endblock %}

@@ -1,0 +1,146 @@
+<!--view by 6 halls:base2 extends base1 and acting as the base for 7 halls-->
+
+{% extends 'base1.html' %}
+{% block content %}
+  {% block hall_desc %}
+  {% endblock %}
+  <div class="tabbable tabs-left">
+  	<ul class="nav nav-tabs" style="margin-left: 50px;">
+  	  <li class="active"><a href="#sports" data-toggle="tab">Sports</a></li>
+  	  <li><a href="#music" data-toggle="tab">Music</a></li>
+  	  <li><a href="#dance" data-toggle="tab">Dance</a></li>
+  	  <li><a href="#tech" data-toggle="tab">Tech</a></li>
+  	  <li><a href="#acting" data-toggle="tab">Acting</a></li>
+  	  <li><a href="#arts" data-toggle="tab">Arts</a></li>
+  	  <li><a href="#others" data-toggle="tab">Others</a></li>
+  	</ul>
+  	<div class="tab-content">
+  	  <div class="tab-pane span8 offset2 active" id="sports">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in sports %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="music">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in music %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	    {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="dance">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in dance %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	    {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="tech">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in tech %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	    {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="acting">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in acting %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	   {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="arts">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in arts %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	   {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="others">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in others %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	    {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	 </div>
+  </div>
+{% endblock %}

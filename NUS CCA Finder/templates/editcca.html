@@ -1,0 +1,52 @@
+<!--edit cca-->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="span8 offset1">
+    <h2 class="success">Welcome to editing page--Edit CCAs</h2>
+    <div class="form-align-toright20 span5">
+      <form action="/CCA/edit" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <span class="span2">CCA Name:</span> <input type="text" placeholder="{{ cca.name }}" name="cca_name" value="{{ cca.name }}">
+        </div>
+        <div class="row">
+          <span class="span2">CCA Venue:</span>
+            <select name="cca_venue">
+                <option value="Eusoff" {% if cca.venue=='Eusoff' %} selected {% endif %}>Eusoff</option>
+                <option value="King Edward" {% if cca.venue=='King Edward' %} selected {% endif %}>King Edward</option>
+                <option value="Kent Ridge" {% if cca.venue=='Kent Ridge' %} selected {% endif %}>Kent Ridge</option>
+                <option value="Raffles" {% if cca.venue=='Raffles' %} selected {% endif %}>Raffles</option>
+                <option value="Sheares" {% if cca.venue=='Sheares' %} selected {% endif %}>Sheares</option>
+                <option value="Temasek" {% if cca.venue=='Temasek' %} selected {% endif %}>Temasek</option>
+                <option value="UTown" {% if cca.venue=='UTown' %} selected {% endif %}>UTown</option>
+                <option value="Campus" {% if cca.venue=='Campus' %} selected {% endif %}>NUS Campus</option>
+            </select>
+        </div>
+        <div class="row">
+          <span class="span2">CCA Category:</span>
+            <select name="cca_category">
+                <option value="sports" {% if cca.category=='sports' %} selected {% endif %}>Sports</option>
+                <option value="music" {% if cca.category=='music' %} selected {% endif %}>Music</option>
+                <option value="dance" {% if cca.category=='dance' %} selected {% endif %}>Dance</option>
+                <option value="tech" {% if cca.category=='tech' %} selected {% endif %}>Tech</option>
+                <option value="drama" {% if cca.category=='drama' %} selected {% endif %}>Drama</option>
+                <option value="arts" {% if cca.category=='arts' %} selected {% endif %}>Arts</option>
+                <option value="others" {% if cca.category=='others' %} selected {% endif %}>Others</option>
+            </select>
+        </div>
+        <div class="row">
+          <span class="span2">CCA Descrption:</span> <textarea name="cca_description">{{ cca.description }}</textarea>
+        </div>
+        <div class="row">
+          <span class="span2">CCA Youtube Link:</span> <input type="text" placeholder="Youtube link, leave blank if none" name="youtubelink" value="{{ cca.videolink }}">
+        </div>
+        <div class="pull-right">
+          <input type="submit" value="Update" class="btn btn-success">
+          <a href="/index" class="btn btn-danger">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

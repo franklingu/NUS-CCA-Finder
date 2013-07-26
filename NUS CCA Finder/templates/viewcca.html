@@ -1,0 +1,67 @@
+<!--view a cca-->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="span6 offset1">
+    <div class="video">
+      {% if cca.videolink %}
+      <iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="{{cca.videolink}}" frameborder="0" allowFullScreen></iframe>
+      {% endif %}
+      {% if cca.videolink==None %}
+         <span>No video found</span>
+      {% endif %}
+    </div>
+  </div> <!--youtube iframe-->
+  <div class="span5">
+    <div class="row">
+      <span class="span1 offset1">Name: </span><span class="span2"> {{ cca.name }}</span>
+    </div>
+    <div class="row">
+      <span class="span1 offset1">Venue: </span><span class="span2"> {{ cca.venue }}</span>
+    </div>
+    <div class="row">
+      <span class="span1 offset1">Category: </span><span class="span2"> {{ cca.category }}</span>
+    </div>
+    <div class="row">
+      <span class="span1 offset1">Description: </span><span class="span2"> {{ cca.description }}</span>
+    </div>
+    <div class="row" style="margin: 30px;">
+      <div class="span2 offset1">
+        <div class="span1 pull-left" style="display: inline-block;">
+        <form action="/CCA/view" method="post">
+          <input type="hidden" name="name" value="{{ cca.name }}">
+          <input type="hidden" name="venue" value="{{ cca.venue }}">
+          <input type="hidden" name="status" value="interested">
+          <input type="submit" class="btn btn-primary {% if interest=='yes' %} disabled {% endif %}" value="Interest">
+        </form>
+        </div>
+        <div class="span1 pull-right" style="display: inline-block;">
+        <form action="/CCA/view" method="post">
+          <input type="hidden" name="name" value="{{ cca.name }}">
+          <input type="hidden" name="venue" value="{{ cca.venue }}">
+          <input type="hidden" name="status" value="joined">
+          <input type="submit" class="btn {% if join=='yes' %} disabled {% endif %}" value="Join">
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="row" style="margin-top: 20px;">
+  <div class="span6 offset1">
+    {% if admin=='yes' %}As an admin, you can <a href="/CCA/edit?name={{cca.name}}&venue={{cca.venue}}">Edit it</a>.<br />
+    Or you can <a href="/CCA/add">add more</a>.
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="span6 offset1" style="margin-top: 30px; background-color: #CDE0E6; border-radius: 10px; padding: 5px 5px 5px 5px;">
+    <form method='post' action='/CCA/addcomment'>
+      <span>Add you comment</span><br />
+      <textarea name='content' cols='40'></textarea>
+      <input type="submit" value='Comment' class='btn btn-success' />
+    </form>
+  </div>
+</div>
+{% endblock %}

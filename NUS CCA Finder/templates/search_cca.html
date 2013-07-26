@@ -1,0 +1,8 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+	<form class="form-search" method="post" action="/CCA/search?method=basic">
+	  <input type="text" class="input-medium search-query" name="search_cca_basic" placeholder="Input a CCA name">
+	  <input type="submit" class="btn" value="Submit">
+	</form>
+{% endblock %}

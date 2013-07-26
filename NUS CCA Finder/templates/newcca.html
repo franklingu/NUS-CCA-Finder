@@ -1,0 +1,52 @@
+<!--for editors: backend double checking is needed!!!-->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="span8 offset1">
+    <h2 class="success">Welcome to editing page--Add CCAs</h2>
+    <div class="form-align-toright20 span5">
+    	<form action="/CCA/add" method="post" enctype="multipart/form-data">
+        <div class="row">
+    	    <span class="span2">CCA Name:</span> <input type="text" placeholder="CCA Name" name="cca_name">
+        </div>
+        <div class="row">
+    	    <span class="span2">CCA Venue:</span>
+            <select name="cca_venue">
+                <option value="Eusoff">Eusoff</option>
+                <option value="King Edward">King Edward</option>
+                <option value="Kent Ridge">Kent Ridge</option>
+                <option value="Raffles">Raffles</option>
+                <option value="Sheares">Sheares</option>
+                <option value="Temasek">Temasek</option>
+                <option value="UTown">UTown</option>
+                <option value="Campus">NUS Campus</option>
+            </select>
+        </div>
+        <div class="row">
+    	    <span class="span2">CCA Category:</span>
+            <select name="cca_category">
+                <option value="sports">Sports</option>
+                <option value="music">Music</option>
+                <option value="dance">Dance</option>
+                <option value="tech">Tech</option>
+                <option value="drama">Drama</option>
+                <option value="arts">Arts</option>
+                <option value="others">Others</option>
+            </select>
+        </div>
+        <div class="row">
+    	    <span class="span2">CCA Descrption:</span> <textarea name="cca_description">Something about this CCA</textarea>
+        </div>
+        <div class="row">
+    	    <span class="span2">CCA Youtube Link:</span> <input type="text" placeholder="Youtube link, leave blank if none" name="youtubelink">
+        </div>
+        <div class="pull-right">
+      	  <input type="submit" value="Add" class="btn btn-success">
+      	  <a href="/index" class="btn btn-danger">Cancel</a>
+        </div>
+    	</form>
+    </div>
+  </div>
+</div>
+{% endblock %}

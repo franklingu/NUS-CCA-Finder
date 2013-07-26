@@ -1,0 +1,117 @@
+<!-- Front page: before log in -->
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title> NUS CCA Finder</title>
+  <!--configure meta-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property='og:locale' content='en_US'/>
+  <meta property='og:type' content='article'/>
+  <meta property='og:title' content='NUS CCA Finder'/>
+  <meta property='og:description' content='NUS CCA Finder helps you search for CCAs and lets you know what CCAs your friends are taking'/>
+  <meta property='og:url' content='www.nus-cca-finder.appspot.com' />
+  <meta property='og:site_name' content='NUS CCA Finder'/>
+  <meta property='og:image' content='http://nus-cca-finder.appspot.com/images/nusccaimage.png' />
+
+  <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+  <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+  <link type="text/css" rel="stylesheet" href="../stylesheets/mystyles.css">
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif|Lobster+Two' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="../stylesheets/zocial.css">
+</head>
+<body>
+<!-- Main navigation -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href = "/index">NUS CCA Finder</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li class = "active"> <a  href="/index">Home</a> </li>
+            <li class = "active"><a href="/profile">Profile</a></li>
+            <li class = "active"> <a href="/friendster">Friendster up!</a> </li>
+            <li class="active dropdown"> 
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/view/guide">Overview</a></li>
+                <li class="divider"></li>
+                <li><a href="/view/all-halls">View by halls</a></li>
+                <li class="divider"></li>
+                <li><a href="/view/all-categories">View by category</a></li>
+                <li class="divider"></li>
+                <li><a href="/view/search">Search</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+        <div class="span2 pull-right">
+          {% if user_mail!="" %}
+            <span class="user-name"> {{ user_mail }} <a href="{{ logout }}"><span class="log-out-in">Logout</span></a></span>
+          {% endif %}
+          {% if user_mail=="" %}
+            <span style="margin-top: 22px;"><a href="#login-form" data-toggle="modal"><span class="log-out-in">Login</span></a></span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!--children can change the following part-->
+    {% block content %} {% endblock%} 
+
+  <footer class="footer" style = "margin-top: 30px;">
+    <div class="container-fluid">
+      <div class="navbar navbar-inner navbar-fixed-bottom">
+        <!-- AddThis Button BEGINS -->
+        <div style="float:right; width:55%;">
+          <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+            <a class="addthis_button_facebook"></a>
+            <a class="addthis_button_twitter"></a>
+            <a class="addthis_button_google_plusone_share"></a>
+            <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+            <a class="addthis_button_email" addthis:email_vars="{note: 'Hello NUS! Welcome to NUS CCA Finder!'}"><span style="margin-left: 30px; color: white;"> <img style = "margin-right: 6px;"src="http://www.st-bernadettes.stockport.sch.uk/images/emailButton.jpg" width="32" height="32" border="0" alt="Email us your feedback" /></span></a>
+          </div>
+          <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+          <script type="text/javascript"> var addthis_config = { ui_email_note: 'Give us your feedback about NUS CCA Finder!', ui_email_to: 'manmeet.saluja94@gmail.com'}</script>
+<!-- AddThis Button END -->
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+<div id="login-form" class="modal hide fade" aria-labelledby="modallabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="modallabel">Login</h3>
+  </div>
+  <div class="modal-body">       
+    <a href="/_ah/login_required?continue_url=/index&openid_url=NUS" class="zocial openid"> &nbsp;&nbsp;Sign in with NUS open id &nbsp;&nbsp;</a><br /><br />
+    <a href="/_ah/login_required?continue_url=/index&openid_url=Google" class="zocial google">Sign in using Google Account</a><br /><br />
+  </div>
+</div>
+
+
+  <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/scripts/bootstrap.js"></script>
+  <script type="text/javascript">
+    function updateRecommends(){
+      $.ajax({
+        url: "/recommend-ccas",
+        cache: false,
+        success: function(html){
+          $("#recommends").html(html);
+        }
+      });
+    }
+
+    updateRecommends();
+  </script>
+</body>
+</html>

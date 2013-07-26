@@ -1,0 +1,71 @@
+application: nusccagu
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+# favicon
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+# self-defined css
+- url: /stylesheets
+  static_dir: stylesheets
+
+# images
+- url: /images
+  static_dir: images
+
+# self-defined scripts-js
+- url: /scripts
+  static_dir: scripts
+
+# Twitter Bootstrap
+- url: /bootstrap
+  static_dir: bootstrap
+
+#home page handler
+- url: /
+  script: general.app
+
+# Handler for login and redirection
+- url: /_ah/login_required
+  script: login.app
+
+# pages require login: general pages and interest|join
+- url: /(profile|editprofile|friendster|img)
+  script: general.app
+  login: required
+
+- url: /CCA/(addcomment)
+  script: cca.app
+  login: required
+
+# pages require admin: edit/add cca
+- url: /CCA/(edit|add)
+  script: cca.app
+  login: admin
+
+# pages does not require login
+- url: /CCA/(view|search)
+  script: cca.app
+
+- url: /view/(guide|all-halls|hall|all-categories|category|search)
+  script: view.app
+
+- url: /(index|recommend-ccas|main-pic)
+  script: general.app
+
+- url: /errormsg
+  script: errormsg.app
+
+# pages not found
+- url: /.*
+  script: not-found.app
+
+libraries:
+- name: jinja2
+  version: latest

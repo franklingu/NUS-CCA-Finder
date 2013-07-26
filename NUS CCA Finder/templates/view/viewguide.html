@@ -1,0 +1,47 @@
+<!-- view page -->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="span8 offset1">
+    <!--tabbable content-->
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+          <li class="active"><a href="#lA" data-toggle="tab">View CCAs by category</a></li>
+          <li><a href="#lB" data-toggle="tab">View CCAs by location</a></li>
+          <li><a href="#lC" data-toggle="tab">View CCAs by searching</a></li>
+      </ul>
+      <div class="tab-content">
+          <div class="tab-pane active" id="lA">
+              <ul>
+                  <li><a href="/view/category?category=sports">Sports</a></li>
+                  <li><a href="/view/category?category=music">Music</a></li>
+                  <li><a href="/view/category?category=dance">Dance</a></li>
+                  <li><a href="/view/category?category=tech">Tech</a></li>
+                  <li><a href="/view/category?category=drama">Drama</a></li>
+                  <li><a href="/view/category?category=arts">Arts</a></li>
+                  <li><a href="/view/category?category=others">Others</a></li>
+                  <br /><br /><br /> 
+              </ul>
+          </div>
+          <div class="tab-pane" id="lB">
+              <ul>
+                  <li><a href="/view/hall?hall=Eusoff">Eusoff</a></li>
+                  <li><a href="/view/hall?hall=King Edward">King Edward</a></li>
+                  <li><a href="/view/hall?hall=Kent Ridge">Kent Ridge</a></li>
+                  <li><a href="/view/hall?hall=Raffles">Raffles</a></li>
+                  <li><a href="/view/hall?hall=Sheares">Sheares</a></li>
+                  <li><a href="/view/hall?hall=Temasek">Temasek</a></li>
+                  <li><a href="/view/hall?hall=UTown">UTown</a></li>
+                  <li><a href="/view/hall?hall=Campus">Campus</a></li>
+              </ul>
+          </div>
+          <div class="tab-pane" id="lC">
+            <form class="form-search" method="post" action="/CCA/search">
+              <input type="hidden" name="method" value="basic">
+              <input type="text" class="input-medium search-query" name="search_cca_basic" placeholder="Input a CCA name">
+              <input type="submit" class="btn" value="Submit">
+            </form>
+          </div>
+    </div>
+</div>
+{% endblock %}

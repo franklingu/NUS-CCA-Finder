@@ -1,0 +1,146 @@
+<!--view by 7 categories:base3 extends base1 and acting as the base for the different categories-->
+
+{% extends 'base1.html' %}
+{% block content %}
+  {% block categ_desc %}
+  {% endblock %}
+  <div class="tabbable tabs-left">
+  	<ul class="nav nav-tabs" style="margin-left: 50px;">
+  	  <li class="active"><a href="#campus" data-toggle="tab">NUS-wide</a></li>
+  	  <li><a href="#kr" data-toggle="tab">Kent Ridge</a></li>
+  	  <li><a href="#ke" data-toggle="tab">King Edward VII</a></li>
+  	  <li><a href="#temasek" data-toggle="tab"> Temasek</a></li>
+  	  <li><a href="#raffles" data-toggle="tab">Raffles</a></li>
+  	  <li><a href="#sheares" data-toggle="tab">Sheares</a></li>
+  	  <li><a href="#eusoff" data-toggle="tab">Eusoff</a></li>
+  	</ul>
+  	<div class="tab-content">
+  	  <div class="tab-pane span8 offset2 active" id="campus">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in campus %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="kr">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in kr %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="ke">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in ke %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="temasek">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in temasek %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="raffles">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in raffles %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="sheares">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in sheares %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	  {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	  <div class="tab-pane span8 offset2" id="eusoff">
+  	  	<table class="table table-hover">
+  	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
+  	  	  </thead>
+  	  	  <tbody>
+  	  	  	 {% for each in eusoff %}
+			    <tr>
+			  	  <td>
+		          {{ each.name }}
+			  	  </td>
+			  	  <td>
+			  	    {{ each.description }} 
+			  	  </td>
+			    </tr>
+			  {% endfor %}
+  	  	  </tbody>
+  	  	</table>
+  	  </div>
+  	 </div>
+  </div>
+{% endblock %}

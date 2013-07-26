@@ -1,0 +1,15 @@
+<!-- search page:search a person's ccas,  extends from base1 -->
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row-fluid">
+	<div class="span8 offset1">
+	    <form  action="/friendster" method="post">
+	        <div class="row">  
+	            <input type="text" class="input-medium search-query" placeholder="Enter NUS email of your friend" name="friend_email">
+	            <input type="submit" class="btn btn-primary" name="submit_email" />
+	        </div>
+	    </form>	
+	</div>
+</div>
+{% endblock %}	
