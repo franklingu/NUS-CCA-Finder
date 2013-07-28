@@ -2,7 +2,19 @@
 
 {% block content %}
   {% for cca in search_result %}
-    <a href="/CCA/view?name={{cca.name}}&venue={{cca.venue}}">{{ cca.name }}</a>
-    {{ cca.venue }}
+  <div class = "row-fluid">
+      <div class="span6 offset2" style = "padding-top: 30px;">
+      	<table id="customers">
+          <tr>
+            <th>CCA</th>
+            <th>Venue</th>
+          </tr>
+          <tr class="alt">
+            <td><a href= "/CCA/view?name={{cca.name}}&venue={{cca.venue}}">{{ cca.name }}</a></td>
+            <td>{{ cca.venue }}</td>
+          </tr>
+        </table>
+    </div>
+</div>
   {% endfor %}
 {% endblock %}
