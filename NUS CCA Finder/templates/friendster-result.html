@@ -1,0 +1,32 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="row-fluid">
+	<div class="span8 offset1">
+		<h4> CCAs that {{ user_mail }} is interested in</h4>
+ 	<table id="customers">
+          <tr>
+            <th>CCAs interested in</th>
+            <th>Venue</th>
+          </tr>
+          <tr class="alt">
+            <td>Tech Crew</a></td>
+            <td>Temasek</td>
+          </tr>
+        </table>
+        <br>
+        <br>
+        <h4> CCAs that {{ user_mail }} has taken</h4>
+        <table id="customers">
+          <tr>
+            <th>CCAs taken</th>
+            <th>Venue</th>
+          </tr>
+          <tr class="alt">
+            <td>Tech Crew</a></td>
+            <td>Temasek</td>
+          </tr>
+        </table>
+</div>
+  </div>
+{% endblock %}
