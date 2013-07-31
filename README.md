@@ -1,6 +1,11 @@
 orbital-start
 =============
 core code for nus cca finder version 1.0
-still in learning process: hope it is clear to others
+Author: franklin(Junchao) Manmeet
 
-orbital start
+Related SDK or projects used:
+GAE(python), Addthis, NPR-reponsive iframe
+
+orbital
+
+---Publish online for study. Please do not misuse.
