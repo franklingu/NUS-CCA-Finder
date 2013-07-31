@@ -57,7 +57,7 @@ class ViewCCA(webapp2.RequestHandler):
         logging.info("no_mini is "+str(no_mini))
         if no_mini==0:
           interest='no'
-          join='yes'
+          join='no'
         elif no_mini==2:
           interest='yes'
           join='yes'
@@ -101,48 +101,54 @@ class ViewCCA(webapp2.RequestHandler):
       cca_venue = self.request.get('venue')
       status = self.request.get('status')
       person_key = db.Key.from_path('Persons', user)
-      miniCCA_query = db.GqlQuery("SELECT * FROM miniCCA WHERE name=:1 AND venue=:2 AND status=:3 AND ANCESTOR IS :4", cca_name, cca_venue, status, person_key)
-      num1=0
-      for mini in miniCCA_query:
-        num1+=1
-      #logging.info('num1 is '+str(num1))
-      if num1==0: 
-        ccas = db.GqlQuery("SELECT * FROM CCA_item WHERE name=:1 AND venue=:2", cca_name, cca_venue)
-        num2 = 0
-        for cca in ccas:
-          num2 += 1
-        if num2==1:
-          cca=ccas.get()
-          parent_key = db.Key.from_path('Persons', users.get_current_user().email())
-          target = miniCCA(parent=parent_key)
-          if status=='interested':
-            target.status='interested'
-            err_exist=False
-          elif status=='joined':
-            target.status='joined'
-            err_exist=False
+      if person_key:
+        miniCCA_query = db.GqlQuery("SELECT * FROM miniCCA WHERE name=:1 AND venue=:2 AND status=:3 AND ANCESTOR IS :4", cca_name, cca_venue, status, person_key)
+        num1=0
+        for mini in miniCCA_query:
+          num1+=1
+        #logging.info('num1 is '+str(num1))
+        if num1==0: 
+          ccas = db.GqlQuery("SELECT * FROM CCA_item WHERE name=:1 AND venue=:2", cca_name, cca_venue)
+          num2 = 0
+          for cca in ccas:
+            num2 += 1
+          if num2==1:
+            cca=ccas.get()
+            parent_key = db.Key.from_path('Persons', users.get_current_user().email())
+            target = miniCCA(parent=parent_key)
+            if status=='interested':
+              target.status='interested'
+              err_exist=False
+            elif status=='joined':
+              target.status='joined'
+              err_exist=False
+            else:
+              self.redirect('/errormsg?error=Request is illegal&continue_url=profile')
+              err_exist=True
+            if not err_exist:
+              target.name=cca_name
+              target.venue=cca_venue
+              if status=='interested':
+                cca.joined_number+=1
+              else:
+                cca.joined_number+=2
+              cca.put()
+              target.put()
+              self.redirect('/profile')
+            else:
+              pass
+          elif num2==0:
+            self.redirect('/errormsg'+'?error=Unexpected error: Data coruption&continue_url=view/guide')
           else:
-            self.redirect('/errormsg?error=Request is illegal&continue_url=profile')
-            err_exist=True
-          if err_exist:
-            target.name=cca_name
-            target.venue=cca_venue 
-            cca.joined_number+=1
-            cca.put()
-            target.put()
-            self.redirect('/profile')
-          else:
-            pass
-        elif num2==0:
-          self.redirect('/errormsg'+'?error=Unexpected error: Data coruption&continue_url=view/guide')
+            self.redirect('/errormsg'+'?error=Unexpected error: Database error&continue_url=view/guide')    
+        elif num1==1:
+          self.redirect('/profile')
         else:
-          self.redirect('/errormsg'+'?error=Unexpected error: Database error&continue_url=view/guide')    
-      elif num1==1:
-        self.redirect('/profile')
+          self.redirect('/errormsg'+'?error=Unexpected error&continue_url=index')
       else:
-        self.redirect('/errormsg'+'?error=Unexpected error&continue_url=index')
+        self.redirect('/errormsg'+'error=Login first&continue_url=index')
     else:
-      self.redirect('/errormsg'+'error=Login first&continue_url=index')
+      self.redirect('/errormsg'+'?error=Login First Please&continue_url=index')
 
 #add cca: admin required
 class AddCCA(webapp2.RequestHandler):
@@ -159,7 +165,7 @@ class AddCCA(webapp2.RequestHandler):
       else:
         self.redirect('/errormsg'+'?error=Not Authorized&continue_url=index')
     else:
-      self.redirect('/errormsg'+'?error=Login First Please&continue_url=index')
+      self.redirect('/profile')
 
   def post(self):
     #add a cca; checking is not done yet
@@ -272,9 +278,7 @@ class SearchCCA(webapp2.RequestHandler):
 
   def post(self):
     try:
-      logging.info("try block")
       mode = self.request.get('method')
-      logging.info("method = "+mode)
       if mode=='basic':
         logging.info("here is basic")
         query_basic = self.request.get('search_cca_basic')

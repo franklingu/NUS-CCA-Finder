@@ -20,16 +20,12 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in sports %}
+  	  	  {% for each in sports %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	  {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
-			  {% endfor %}
+			    {% endfor %}
   	  	  </tbody>
   	  	</table>
   	  </div>
@@ -38,16 +34,12 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in music %}
+  	  	  {% for each in music %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	    {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
-			  {% endfor %}
+			    {% endfor %}
   	  	  </tbody>
   	  	</table>
   	  </div>
@@ -56,14 +48,10 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in dance %}
+  	  	  {% for each in dance %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	    {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
 			  {% endfor %}
   	  	  </tbody>
@@ -76,12 +64,8 @@
   	  	  <tbody>
   	  	  	 {% for each in tech %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	    {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
 			  {% endfor %}
   	  	  </tbody>
@@ -92,14 +76,10 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in acting %}
+  	  	  {% for each in acting %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	   {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
 			  {% endfor %}
   	  	  </tbody>
@@ -110,16 +90,12 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in arts %}
+  	  	  {% for each in arts %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	   {{ each.description }} 
-			  	  </td>
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }}</td>
 			    </tr>
-			  {% endfor %}
+			    {% endfor %}
   	  	  </tbody>
   	  	</table>
   	  </div>
@@ -128,16 +104,11 @@
   	  	  <thead><tr><th>Name</th><th width="80%">Description</th></tr>
   	  	  </thead>
   	  	  <tbody>
-  	  	  	 {% for each in others %}
+  	  	  {% for each in others %}
 			    <tr>
-			  	  <td>
-		          {{ each.name }}
-			  	  </td>
-			  	  <td>
-			  	    {{ each.description }} 
-			  	  </td>
-			    </tr>
-			  {% endfor %}
+			  	  <td><a href="/CCA/view?name={{each.name}}&venue={{each.venue}}">{{ each.name }}</a></td>
+			  	  <td>{{ each.description }} </td></tr>
+			    {% endfor %}
   	  	  </tbody>
   	  	</table>
   	  </div>

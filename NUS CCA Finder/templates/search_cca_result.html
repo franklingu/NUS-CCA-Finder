@@ -1,20 +1,20 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-  {% for cca in search_result %}
-  <div class = "row-fluid">
-      <div class="span6 offset2" style = "padding-top: 30px;">
-      	<table id="customers">
-          <tr>
-            <th>CCA</th>
-            <th>Venue</th>
-          </tr>
-          <tr class="alt">
-            <td><a href= "/CCA/view?name={{cca.name}}&venue={{cca.venue}}">{{ cca.name }}</a></td>
-            <td>{{ cca.venue }}</td>
-          </tr>
-        </table>
-    </div>
+<div class = "row-fluid">
+  <div class="span6 offset2" style = "padding-top: 30px;">
+    <table id="customers">
+      <tr>
+        <th>CCA</th>
+        <th>Venue</th>
+      </tr>
+      {% for cca in search_result %}
+      <tr class="alt">
+        <td><a href= "/CCA/view?name={{cca.name}}&venue={{cca.venue}}">{{ cca.name }}</a></td>
+        <td>{{ cca.venue }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
-  {% endfor %}
 {% endblock %}

@@ -38,7 +38,7 @@
           <div class="tab-pane" id="lC">
             <form class="form-search" method="post" action="/CCA/search">
               <input type="hidden" name="method" value="basic">
-              <input type="text" class="input-medium search-query" name="search_cca_basic" placeholder="Input a CCA name">
+              <input type="text" class="input-medium search-query" name="search_cca_basic" placeholder="Input a CCA name" data-provide="typeahead" data-items="4" data-source="[{%for cca in ccas%}&quot;{{cca.name}}&quot;,{%endfor%}&quot;tech crew&quot;]" autocomplete="off" />
               <input type="submit" class="btn" value="Submit">
             </form>
           </div>

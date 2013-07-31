@@ -17,11 +17,12 @@ jinja_environment = jinja2.Environment(
 class ViewGuide(webapp2.RequestHandler):
   """enable user see the view page"""
   def get(self):
+    ccas=db.GqlQuery("SELECT * from CCA_item")
     template_values = {
       'user_mail': users.get_current_user().email(),
       'logout': users.create_logout_url(self.request.host_url),
+      'ccas': ccas,
       } 
-
     template = jinja_environment.get_template('/view/viewguide.html')
     self.response.out.write(template.render(template_values))
 
@@ -39,7 +40,7 @@ class ViewByHall(webapp2.RequestHandler):
   """view halls: one by one"""
   def get(self):
     hall = self.request.get('hall')
-    if not (hall=='Temasek' or hall=='Eusoff' or hall=='Kent Ridge' or hall=='King Edward' or hall=='Raffles' or hall=='Sheares' or hall=='Utown' or hall=='Campus'):
+    if not (hall=='Temasek' or hall=='Eusoff' or hall=='Kent Ridge' or hall=='King Edward' or hall=='Raffles' or hall=='Sheares' or hall=='UTown' or hall=='Campus'):
       self.redirect('/errormsg'+'?error=Illegal Link&continue_url=index')
     else:
       sports = db.GqlQuery("SELECT * FROM CCA_item WHERE venue=:1 AND category='sports' ORDER BY joined_number DESC", hall)

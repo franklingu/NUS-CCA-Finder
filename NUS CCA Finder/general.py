@@ -178,7 +178,7 @@ class Friendster(webapp2.RequestHandler):
         'user_mail': users.get_current_user().email(),
         'logout': users.create_logout_url(self.request.host_url),
         } 
-      template = jinja_environment.get_template('search.html')
+      template = jinja_environment.get_template('friendster-search.html')
       self.response.out.write(template.render(template_values))
     else:
       self.redirect(self.request.host_url)
@@ -188,8 +188,8 @@ class Friendster(webapp2.RequestHandler):
     # Retrieve person
     parent_key = db.Key.from_path('Persons', target)
     if parent_key!=None:
-      query1 = db.GqlQuery("SELECT * FROM miniCCA WHERE ANCESTOR IS :1 AND join = 'interest'", parent_key)
-      query2 = db.GqlQuery("SELECT * FROM miniCCA WHERE ANCESTOR IS :1 AND join = 'join'", parent_key)
+      query1 = db.GqlQuery("SELECT * FROM miniCCA WHERE ANCESTOR IS :1 AND status = 'interested'", parent_key)
+      query2 = db.GqlQuery("SELECT * FROM miniCCA WHERE ANCESTOR IS :1 AND status = 'joined'", parent_key)
       template_values = {
         'user_mail': users.get_current_user().email(),
         'target_mail': target,
@@ -204,7 +204,7 @@ class Friendster(webapp2.RequestHandler):
         'target_mail': target,
         'found': False,
       } 
-    template = jinja_environment.get_template('display.html')
+    template = jinja_environment.get_template('friendster-result.html')
     self.response.out.write(template.render(template_values))
 
 #need to be more sure about this one
@@ -225,8 +225,12 @@ class ImageDisplay(webapp2.RequestHandler):
 class Recommend(webapp2.RequestHandler):
   """simple ajax part"""
   def get(self):
+    recomd = db.GqlQuery("SELECT * FROM CCA_item ORDER BY joined_number LIMIT 6")
+    template_values = {
+      'recommends': recomd,
+    }
     template = jinja_environment.get_template('recommend.html')
-    self.response.out.write(template.render())
+    self.response.out.write(template.render(template_values))
 
 
 app = webapp2.WSGIApplication([('/', HostPage),
