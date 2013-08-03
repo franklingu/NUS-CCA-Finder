@@ -2,14 +2,21 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-<div class="row-fluid">
-	<div class="span8 offset1">
-	    <form  action="/friendster" method="post">
-	        <div class="row">  
-	            <input type="text" class="input-medium search-query" placeholder="Enter NUS email of your friend" name="friend_email">
-	            <input type="submit" class="btn btn-primary" name="submit_email" />
-	        </div>
-	    </form>	
+<style>
+body{
+  padding-top:52px;
+}
+</style>
+  <form  action="/friendster" method="post"> 
+  <div class = "jumbotron masthead">
+  <div class = "container" style = "margin-bottom: 10%; margin-top:2%;"> 
+	  <fieldset>
+		  <p>Enter the NUS email of your friend to find out what CCA&#39;s h/she is taking <b> (a.k.a Friendster Up!)</b>:</p>
+	<img class = "friendster-pic" src = "/images/brian-and-stewie-pic.jpg"><br> <br>
+     <input type="text" name="friend_email" placeholder = "Enter Email here!"/><br />
+     <input type="submit" name="submit_email" class="btn btn-primary" />
+	  </fieldset>
 	</div>
 </div>
+  </form>	
 {% endblock %}	

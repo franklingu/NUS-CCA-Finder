@@ -4,8 +4,8 @@
 {% block content %}  
 <div class="container">   
   <div class="row" style="margin-bottom: 50px;">  
-    <div class="span4">  
-      <h3>NUS Halls</h3>  
+    <div class="span12">  
+      <h3 style = "text-align:center;">View by location</h3>  
       <p> </p>  
       <div id="slider" class="carousel slide container" style="width: 400px;margin: 0 auto">
         <ol class="carousel-indicators">
@@ -16,43 +16,57 @@
           <li data-target="#slider" data-slide-to="4"></li>
           <li data-target="#slider" data-slide-to="5"></li>
           <li data-target="#slider" data-slide-to="6"></li>
+          <li data-target="#slider" data-slide-to="7"></li>
+          <li data-target="#slider" data-slide-to="8"></li>
         </ol> 
-        <div class="carousel-inner">  
+        <div class="carousel-inner"> 
           <div class="active item">
+            <a href="/view/hall?hall=UTown"><img src="/images/nuscampus.png" /></a>
+            <div class="carousel-caption">
+              <h5 style="color: white;">NUS Campus</h5>
+            </div>
+          </div>    
+          <div class="item">
             <a href="/view/hall?hall=Eusoff"><img src="/images/eusoff.jpg" /></a>
             <div class="carousel-caption">
               <h5 style="color: white;">Eusoff</h5>
-              <p>Description for eusoff</p> 
             </div>
           </div>  
           <div class="item">
             <a href="/view/hall?hall=Kent Ridge"><img src="/images/kentridge.jpg" /></a>
             <div class="carousel-caption">
               <h5 style="color: white;">Kent Ridge</h5>
-              <p>Description for kent ridge</p> 
+ 
             </div>
           </div> 
           <div class="item">
             <a href="/view/hall?hall=King Edward"><img src="/images/kingedward.jpg" /></a>
             <div class="carousel-caption">
               <h5 style="color: white;">King Edward</h5>
-              <p>Description for king edward</p> 
             </div>
           </div> 
+
           <div class="item">
             <a href="/view/hall?hall=Raffles"><img src="/images/raffles.jpg" /></a>
             <div class="carousel-caption">
               <h5 style="color: white;">Raffles</h5>
-              <p>Description for raffles</p> 
             </div>
-          </div>  
+          </div> 
+
           <div class="item">
             <a href="/view/hall?hall=Temasek"><img src="/images/temasek.jpg" /></a>
             <div class="carousel-caption">
               <h5 style="color: white;">Temasek</h5>
-              <p>Description for temasek</p> 
             </div>
-          </div>  
+          </div> 
+
+          <div class="item">
+            <a href="/view/hall?hall=UTown"><img src="/images/utown.gif" /></a>
+            <div class="carousel-caption">
+              <h5 style="color: white;">Utown</h5>
+            </div>
+          </div> 
+
         </div>  
     <!-- Carousel nav -->  
         <a class="carousel-control left" href="#slider" data-slide="prev">&lsaquo;</a>  
