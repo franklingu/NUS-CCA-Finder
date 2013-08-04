@@ -4,7 +4,7 @@ core code for nus cca finder version 1.0
 Author: franklin(Junchao) Manmeet
 
 Related SDK or projects used:
-GAE(python), Addthis, NPR-reponsive iframe
+GAE(python), Addthis, Bootstrap
 
 orbital
 
