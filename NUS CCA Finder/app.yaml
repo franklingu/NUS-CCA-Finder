@@ -62,6 +62,9 @@ handlers:
 - url: /errormsg
   script: errormsg.app
 
+- url: /(google6af4498b66c997cc.html|sitemap.xml)
+  script: SEO.app
+
 # pages not found
 - url: /.*
   script: not-found.app

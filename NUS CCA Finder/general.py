@@ -225,7 +225,7 @@ class ImageDisplay(webapp2.RequestHandler):
 class Recommend(webapp2.RequestHandler):
   """simple ajax part"""
   def get(self):
-    recomd = db.GqlQuery("SELECT * FROM CCA_item ORDER BY joined_number LIMIT 6")
+    recomd = db.GqlQuery("SELECT * FROM CCA_item ORDER BY joined_number DESC LIMIT 6")
     template_values = {
       'recommends': recomd,
     }

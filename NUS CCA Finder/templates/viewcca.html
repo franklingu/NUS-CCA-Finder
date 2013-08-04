@@ -6,7 +6,7 @@
   <div class="span6 offset1">
     <div class="video">
       {% if cca.videolink %}
-      <iframe title="YouTube video player" class="youtube-player" type="text/html" width="640" height="390" src="{{cca.videolink}}" frameborder="0" allowFullScreen></iframe>
+      <iframe title="YouTube video player" class="youtube-player" type="text/html" src="{{cca.videolink}}" frameborder="0" allowFullScreen style="width:100%; height:100%;"></iframe>
       {% endif %}
       {% if cca.videolink==None %}
          <span>No video found</span>
@@ -57,9 +57,18 @@
 </div>
 <div class="row">
   <div class="span6 offset1" style="margin-top: 30px; background-color: #CDE0E6; border-radius: 10px; padding: 5px 5px 5px 5px;">
+    <div style="margin-top: 10px; border: 1px black solid; border-radius: 5px; background-color: #AAFFAD; padding: 5px 5px 5px 10px;">
+      {%for each in comments%}
+      <span style="font-size: 1em;">{{each.author}} said:<br /></span>
+      <strong>{{each.comment}}<br /></strong>
+      <span style="font-size: 0.8em;">{{each.date}}<br /></span>
+      {%endfor%}
+    </div>
     <form method='post' action='/CCA/addcomment'>
       <span>Add you comment</span><br />
       <textarea name='content' cols='40'></textarea>
+      <input type="hidden" name="cca_name" value="{{cca.name}}" />
+      <input type="hidden" name="cca_venue" value="{{cca.venue}}">
       <input type="submit" value='Comment' class='btn btn-success' />
     </form>
   </div>

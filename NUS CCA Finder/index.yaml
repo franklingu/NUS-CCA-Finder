@@ -24,6 +24,11 @@ indexes:
   - name: date
     direction: desc
 
+- kind: CCA_comments
+  ancestor: yes
+  properties:
+  - name: date
+
 - kind: CCA_item
   properties:
   - name: category

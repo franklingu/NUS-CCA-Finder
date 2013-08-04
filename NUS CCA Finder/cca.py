@@ -7,6 +7,8 @@ import logging
 from google.appengine.ext import db
 from google.appengine.api import users
 from datetime import datetime
+from time import gmtime
+from time import strftime
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
@@ -51,10 +53,13 @@ class ViewCCA(webapp2.RequestHandler):
         num += 1
       if num == 1:
         minis = db.GqlQuery("SELECT * FROM miniCCA WHERE name=:1 AND venue=:2 AND ANCESTOR IS :3", cca_name, cca_venue , person_key)
+        cca_keyname = str(str(cca_name)+str(cca_venue))
+        cca_key = db.Key.from_path("CCA_item",cca_keyname)
+        comments = db.GqlQuery("SELECT * FROM CCA_comments WHERE ANCESTOR IS :1 ORDER BY date", cca_key)
         no_mini=0
         for mini in minis:
           no_mini+=1
-        logging.info("no_mini is "+str(no_mini))
+        #logging.info("no_mini is "+str(no_mini))
         if no_mini==0:
           interest='no'
           join='no'
@@ -85,6 +90,7 @@ class ViewCCA(webapp2.RequestHandler):
           'interest': interest,
           'join': join,
           'admin': admin,
+          'comments': comments,
         }
         template = jinja_environment.get_template('/viewcca.html')
         self.response.out.write(template.render(template_values))
@@ -198,16 +204,24 @@ class AddComments(webapp2.RequestHandler):
       if len(content)<=6 or len(content)>=200:
         self.redirect('/errormsg'+'?error=Input is short or too long&continue_url=view/guide')
       else:
-        this_comment = CCA_comments()
-        this_comment.comment = content
-        this_comment.date = str(datetime.now())
-        if person_key:
-          person = db.get(person_key)
-          this_comment.author = person.name
+        cca_name = self.request.get("cca_name")
+        cca_venue = self.request.get("cca_venue")
+        cca_keyname = str(str(cca_name)+str(cca_venue))
+        cca_key = db.Key.from_path("CCA_item",cca_keyname)
+        if cca_key:
+          this_comment = CCA_comments(parent=cca_key)
+          this_comment.comment = content
+          this_comment.date = strftime("%d/%m/%Y %H:%M:%S", gmtime())
+          """if person_key:
+            person = db.get(person_key)
+            this_comment.author = person.name
+          else:
+            this_comment.author = 'annonymous'"""
+          this_comment.author = user 
+          this_comment.put()
+          self.redirect('/view/guide')
         else:
-          this_comment.author = 'annonymous'
-        this_comment.put()
-        self.redirect('/view/guide')
+          self.redirect('/errormsg'+'?error=Unexpected error: data coruption&continue_url=view/guide')
     else:
       self.redirect('/errormsg'+'error=You need to login first&continue_url=view/guide')
 

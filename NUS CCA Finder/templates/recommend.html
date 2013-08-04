@@ -1,8 +1,7 @@
-<div class="span2">
-	{% for cca in recommends %}
-	<div class="CCA_rank">
-		<div class="CCA_rank_header">{{cca.name}}</div>
-        <div class="CCA_rank_desc">{{cca.description}}</div>
-	</div>
-	{% endfor %}
+<h2>Recommend</h2>
+{% for cca in recommends %}
+<div style="border: 1px black solid; border-radius: 5px; padding: 5px 5px 5px 5px; margin-top: 5px; background-color: #93FF97;">
+	<span><a class="tip" href="/CCA/view?name={{cca.name}}&venue={{cca.venue}}" title="{{cca.description}}">{{cca.name}}</a></span>
+  <span>{{cca.venue}}</span>
 </div>
+{% endfor %}

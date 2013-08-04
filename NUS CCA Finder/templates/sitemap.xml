@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://nusccagu.appspot.com/</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/index</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/profile</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/img</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/editprofile</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/friendster</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/index</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/CCA/addcomment</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/CCA/add</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/CCA/view</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/CCA/edit</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/CCA/search</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/guide</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/all-halls</loc>
+	<changefreq>monthly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/hall</loc>
+	<changefreq>daily</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/all-categories</loc>
+	<changefreq>monthly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/category</loc>
+	<changefreq>daily</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/view/search</loc>
+	<changefreq>weekly</changefreq>
+</url>
+<url>
+	<loc>http://nusccagu.appspot.com/recommend-ccas</loc>
+	<changefreq>daily</changefreq>
+</url>
+</urlset>

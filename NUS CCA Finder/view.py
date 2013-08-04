@@ -18,13 +18,23 @@ class ViewGuide(webapp2.RequestHandler):
   """enable user see the view page"""
   def get(self):
     ccas=db.GqlQuery("SELECT * from CCA_item")
-    template_values = {
-      'user_mail': users.get_current_user().email(),
-      'logout': users.create_logout_url(self.request.host_url),
-      'ccas': ccas,
-      } 
-    template = jinja_environment.get_template('/view/viewguide.html')
-    self.response.out.write(template.render(template_values))
+    user=users.get_current_user().email()
+    if user:
+      template_values = {
+        'user_mail': user,
+        'logout': users.create_logout_url(self.request.host_url),
+        'ccas': ccas,
+        } 
+      template = jinja_environment.get_template('/view/viewguide.html')
+      self.response.out.write(template.render(template_values))
+    else:
+      template_values = {
+        'user_mail': '',
+        'logout': users.create_logout_url(self.request.host_url),
+        'ccas': ccas,
+        } 
+      template = jinja_environment.get_template('/view/viewguide.html')
+      self.response.out.write(template.render(template_values))
 
 class ViewHalls(webapp2.RequestHandler):
   """request handler for view by hall page"""
@@ -116,9 +126,11 @@ class ViewByCategory(webapp2.RequestHandler):
 
 class ViewSearch(webapp2.RequestHandler):
   def get(self):
+    ccas=db.GqlQuery("SELECT * from CCA_item")
     template_values = {
       'user_mail': users.get_current_user().email(),
-      'logout': users.create_logout_url(self.request.host_url)
+      'logout': users.create_logout_url(self.request.host_url),
+      'ccas': ccas,
       }
     template = jinja_environment.get_template('/view/viewbysearch.html')
     self.response.out.write(template.render(template_values))

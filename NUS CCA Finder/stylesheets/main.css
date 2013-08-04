@@ -66,8 +66,10 @@
 }
 
 .video {
-    height: 392px;
-    width: 643px;
+    min-height: 150px;
+    height: 320px;
+    max-height: 500px;
+    width: 100%;
     border: 1px solid black;
     border-radius: 7px;
     background-color: #CBCBCE;
