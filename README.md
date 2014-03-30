@@ -1,11 +1,8 @@
-orbital-start
+NUS CCA FINDER (NUS Orbital program project)
 =============
-core code for nus cca finder version 1.0
-Author: franklin(Junchao) Manmeet
 
-Related SDK or projects used:
-GAE(python), Addthis, Bootstrap
+A cool app to help you find CCA's around NUS. Accessible via - nusccagu.appspot.com
 
-orbital
+Built using Google App Engine(Python) with frontend implemented using AddThis, Twitter Bootstrap and javascript.
 
----Publish online for study. Please do not misuse.
+Built by Gu Junchao and Manmeet Singh Saluja
